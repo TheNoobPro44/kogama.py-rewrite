@@ -1,0 +1,1 @@
+# KoGaMa.py-Rewrite
