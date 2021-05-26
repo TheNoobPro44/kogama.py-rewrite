@@ -1,31 +1,23 @@
 import setuptools
-import os
 
-README = open("README.md").read()
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 setuptools.setup(
-  name = 'KoGaMa.py-Rewrite',
-  version = '0.1',
-  license='MIT',
-  description = 'An API wrapper for KoGaMa re-written in Python.',
-  long_description = README,
-  long_description_content_type="text/markdown",
-  author = 'TheNoobPro44',
-  author_email = 'TheNewbiePro44@gmail.com',
-  url = 'https://github.com/TheNoobPro44/KoGaMa.py-Rewrite/',
-  keywords = ['kogama', 'api'],
-  python_requires=">=3.5.3",
-  install_requires=[
-          'requests',
-          'beautifulsoup4',
-          'lxml',
-      ],
-  classifiers=[
-    'Development Status :: 1 - Development',
-    'Intended Audience :: Developers',
-    'Topic :: Software Development :: Build Tools',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3.9.5',
-    'Programming Language :: Python :: 3.9.5',
-  ],
+    name="KoGaMa.py-Rewrite",
+    version="0.1.1",
+    author="TheNoobPro44",
+    author_email="TheNewbiePro44@gmail.com",
+    description="KoGaMa.py-rewrite is a easy-to-use API wrapper for KoGaMa (Online Game).",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/TheNoobPro44/KoGaMa.py-Rewrite/",
+    project_urls={
+        "Bug Tracker": "https://github.com/TheNoobPro44/KoGaMa.py-Rewrite/issues",
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ]
 )
