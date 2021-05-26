@@ -15,7 +15,7 @@ from Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, 
 class KoGaMa:
     def __init__(self, server):
         if server.lower() not in ('www', 'br', 'friends'):
-            raise Exception('Not a valid server')
+            raise NotAValidServer('Not a valid server')
         
         self.haslogged = False
         self.user_id = None
