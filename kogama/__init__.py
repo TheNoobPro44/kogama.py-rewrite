@@ -1,2 +1,2 @@
-from .kogama import KoGaMa
+from .KoGaMa import KoGaMa
 from .Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
