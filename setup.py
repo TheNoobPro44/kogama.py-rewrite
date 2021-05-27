@@ -6,6 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setuptools.setup(
     name="KoGaMa.py-Rewrite",
     version="0.1",
+    packages = ['Kogama']
     author="TheNoobPro44",
     author_email="TheNewbiePro44@gmail.com",
     description="KoGaMa.py-rewrite is a easy-to-use API wrapper for KoGaMa (Online Game).",
