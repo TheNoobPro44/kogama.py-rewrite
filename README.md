@@ -15,7 +15,7 @@ pip install kogama.py-rewrite
 ```
 
 ### Example:
-```
+```python
 from kogama import KoGaMa
 
 client = KoGaMa("www")
