@@ -17,7 +17,6 @@ class KoGaMa:
         if server.lower() not in ('www', 'br', 'friends'):
             raise NotAValidServer('Not a valid server!')
         
-        self.haslogged = False
         self.user_id = None
         self.url = {
             'br': 'https://kogama.com.br',
@@ -44,7 +43,6 @@ class KoGaMa:
         if response.status_code != 200:
           raise FailedLogin("Please check if your password / username is correct and try again..")
         else:
-          self.haslogged = True
           self.user_id = response.json()['data']['id']
 
     def Logout(self):
@@ -60,12 +58,12 @@ class KoGaMa:
     def PostFeed(self, message):
         data = {
             "status_message": message,
-            "profile_id": self.user_id,
+            "profile_id": {self.user_id},
             "wait": True,
         }
         response = self.session.post(f"{self.url}/api/feed/{self.user_id}", json=data)
         response2 = response.text
-        if response.status_code != 200:
+        if response.status_code != 201:
           print(response.text)
         if 'Disallowed' in response2:
           raise DisallowedURlInput("Please do not put links in your message!")
@@ -80,7 +78,7 @@ class KoGaMa:
         raise ReasonNotFound("This report reason is invalid!")
       else:
         rn = reports[rl2]
-        response = self.session.post(f"{self.url}/api/report/profile/{self.userID}/{self.rn}/")
+        response = self.session.post(f"{self.url}/api/report/profile/{userID}/{rn}/")
         sc = response.status_code
         return True
         if sc == 429:
@@ -92,7 +90,7 @@ class KoGaMa:
       data = {
         "comment":message
       }
-      response = self.session.post(f"{self.url}/game/{self.GameID}/comment/", json=data)
+      response = self.session.post(f"{self.url}/game/{GameID}/comment/", json=data)
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
@@ -109,9 +107,9 @@ class KoGaMa:
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
-      if response.status_code == 200:
+      if response.status_code == 201:
         return True
-      elif response.status_code != 200:
+      elif response.status_code != 201:
         return False
 
     def GetPostComments(self, postID):
@@ -144,9 +142,9 @@ class KoGaMa:
       else:
         tn = templates[tmplt2]
         data = {
-          "name":{self.Name},
-          "description":{self.Desc},
-          "proto_id":{self.tn}
+          "name":{Name},
+          "description":{Desc},
+          "proto_id":{tn}
         }
         response = self.session.post(f"{self.url}/game/", json=data)
         stscd = response.status_code
@@ -160,8 +158,8 @@ class KoGaMa:
         "game_id":{self.GameID},
         "member_user_id":{self.UserID}
       }
-      response = self.session.post(f"{self.url}/game/{self.GameID}/member/", json=data
-    )
+      response = self.session.post(f"{self.url}/game/{GameID}/member/", json=data)
+        
       stscd = response.status_code
       if stscd == 201:
         return True
