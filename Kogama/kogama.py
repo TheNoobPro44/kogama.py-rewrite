@@ -10,7 +10,7 @@ import requests
 import time
 import json
 from requests.sessions import Session, session
-from Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
+from .Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
 
 class KoGaMa:
     def __init__(self, server):
