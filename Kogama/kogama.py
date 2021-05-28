@@ -10,12 +10,12 @@ import requests
 import time
 import json
 from requests.sessions import Session, session
-from Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
+from exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
 
 class KoGaMa:
     def __init__(self, server):
         if server.lower() not in ('www', 'br', 'friends'):
-            raise NotAValidServer('Not a valid server')
+            raise NotAValidServer('Not a valid server!')
         
         self.haslogged = False
         self.user_id = None
@@ -79,12 +79,14 @@ class KoGaMa:
       if not rl2 in reports:
         raise ReasonNotFound("This report reason is invalid!")
       else:
-        return True
         rn = reports[rl2]
         response = self.session.post(f"{self.url}/api/report/profile/{self.userID}/{self.rn}/")
         sc = response.status_code
+        return True
         if sc == 429:
           raise TooMuchRequests("Chill Cowboy! You're sending alot of reports!")
+        if sc != 201:
+          return False
       
     def PostGameComment(self, GameID, message):
       data = {
@@ -118,7 +120,7 @@ class KoGaMa:
         gfc = response2["data"][0]["_data"]
         gfc2 = json.loads(gfc)
         gfc3 = gfc2["data"]
-        print(gfc3)
+        return gfc3
 
     def PostAvatarComment(self, AvatarID, message):
       data = {
@@ -165,5 +167,3 @@ class KoGaMa:
         return True
       if stscd != 201:
         return False
-
-
