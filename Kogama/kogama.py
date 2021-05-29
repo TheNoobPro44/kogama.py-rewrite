@@ -1,9 +1,7 @@
 ''''
-/*
  * An API wrapper for KoGaMa re-written in Python. 
  * Scripted by: TheNoobPro44 (With the help of: MD & Tokeeto)
  * Originaly Made By: Ars3ne
-*/
 '''
 import os
 import requests
