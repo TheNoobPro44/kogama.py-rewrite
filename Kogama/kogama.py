@@ -55,12 +55,12 @@ class KoGaMa:
       return True
 
     def PostFeed(self, message):
-      """
-      Post a message in user's Feed.
+        """
+        Post a message in user's Feed.
 
-      Returns True, If the message has been sent.
-      Returns False, If message fails to send.
-      """
+        Returns True, If the message has been sent.
+        Returns False, If message fails to send.
+        """
         url2 = self.url
         uid = self.user_id
         data = {"status_message": message,"profile_id": uid,"wait": True,
@@ -73,6 +73,12 @@ class KoGaMa:
           raise DisallowedURlInput("Please do not put links in your message!")
 
     def ReportUser(self, userID, reason):
+      """
+      Reports a users..
+
+      Returns True, If the user has been reported.
+      Returns False, If fails to report a user.
+      """
       url2 = self.url
       rl = reason.lower()
       rl2 = rl.replace(" ", "_")
@@ -92,6 +98,12 @@ class KoGaMa:
           return False
       
     def PostGameComment(self, GameID, message):
+      """
+      Post a comment in a Game.
+
+      Returns True, If the comment has been posted.
+      Returns False, If fails to post a comment.
+      """
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/game/{GameID}/comment/", json=data)
@@ -104,6 +116,12 @@ class KoGaMa:
         return False
     
     def PostModelComment(self, ModelID, message):
+      """
+      Post a comment in a Model.
+
+      Returns True, If the comment has been posted.
+      Returns False, If fails to post a comment.
+      """
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/model/market/i-{ModelID}/comment/", json=data)
@@ -116,6 +134,9 @@ class KoGaMa:
         return False
 
     def GetPostComments(self, postID):
+        """
+        Get comments from a post and return it.
+        """
         url2 = self.url
         response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
         response2 = json.loads(response.text)
@@ -125,6 +146,12 @@ class KoGaMa:
         return gfc3
 
     def PostAvatarComment(self, AvatarID, message):
+      """
+      Post a comment in a Avatar.
+
+      Returns True, If the comment has been posted.
+      Returns False, If fails to post a comment.
+      """
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/model/market/a-{AvatarID}/comment/")
@@ -137,6 +164,12 @@ class KoGaMa:
         return False
 
     def CreateGame(self, Name, Desc, Template):
+      """
+      Creates a game.
+
+      Returns True, If the game has been created.
+      Returns False, If fails to create a game.
+      """
       url2 = self.url
       tmplt = Template.lower()
       tmplt2 = tmplt.replace(" ", "_")
@@ -154,6 +187,12 @@ class KoGaMa:
           return False
 
     def InviteMemberToGame(self, GameID, UserID):
+      """
+      Invites a member to a Project or Game.
+
+      Returns True, If the user has been invited.
+      Returns False, If fails to invite a user.
+      """
       url2 = self.url
       data = {"game_id":GameID,"member_user_id":UserID
       }
