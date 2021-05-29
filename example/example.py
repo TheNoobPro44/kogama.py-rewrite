@@ -1,4 +1,4 @@
-from kogama import KoGaMa
+from Kogama.kogama import KoGaMa
 
 k = KoGaMa("www")
 k.Login("Username", "Password")
