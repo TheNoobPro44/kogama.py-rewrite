@@ -31,7 +31,7 @@ class KoGaMa:
         Returns False, If the user could not login.
         """
         data = {"username": username, "password": password}
-        response = self.session.post(f"{self.url}/auth/login", json=data)
+        response = self.session.post(f"{self.url}/auth/login/", json=data)
         if 'error' not in response:
           return True
         elif 'error' in response:
@@ -61,11 +61,10 @@ class KoGaMa:
         """
         url2 = self.url
         uid = self.user_id
-        data = {"status_message": message,"profile_id": uid,"wait": True,
-        }
-        response = self.session.post(f"{url2}/api/feed/{uid}", json=data)
+        data = {"status_message": message,"profile_id": uid,"wait": True}
+        response = self.session.post(f"{url2}/api/feed/{uid}/", json=data)
         response2 = response.text
-        if response.status_code != 201:
+        if response.status_code != 200:
           print(response.text)
         if 'Disallowed' in response2:
           raise DisallowedURlInput("Please do not put links in your message!")
@@ -192,8 +191,7 @@ class KoGaMa:
       Returns False, If fails to invite a user.
       """
       url2 = self.url
-      data = {"game_id":GameID,"member_user_id":UserID
-      }
+      data = {"game_id":GameID,"member_user_id":UserID}
       response = self.session.post(f"{url2}/game/{GameID}/member/", json=data)
       stscd = response.status_code
       if stscd == 201:
