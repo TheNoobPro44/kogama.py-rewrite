@@ -18,11 +18,10 @@ class KoGaMa:
             raise NotAValidServer('Not a valid server!')
         
         self.user_id = None
-        self.url = {
-            'br': 'https://kogama.com.br',
-            'www': 'https://www.kogama.com',
-            'friends': 'https://friends.kogama.com',
-        }[server.lower()]
+        self.url = {'br': 'https://kogama.com.br',
+                    'www': 'https://www.kogama.com',
+                    'friends': 'https://friends.kogama.com',
+                   }[server.lower()]
 
         self.session = requests.Session()
 
@@ -41,7 +40,7 @@ class KoGaMa:
           return False
         
         if response.status_code != 200:
-          raise FailedLogin("Please check if your password / username is correct and try again..")
+          raise FailedLogin("Please check If your Password / Username is correct and try again..")
         else:
           self.user_id = response.json()['data']['id']
 
@@ -56,12 +55,17 @@ class KoGaMa:
       return True
 
     def PostFeed(self, message):
-        data = {
-            "status_message": message,
-            "profile_id": {self.user_id},
-            "wait": True,
+      """
+      Post a message in user's Feed.
+
+      Returns True, If the message has been sent.
+      Returns False, If message fails to send.
+      """
+        url2 = self.url
+        uid = self.user_id
+        data = {"status_message": message,"profile_id": uid,"wait": True,
         }
-        response = self.session.post(f"{self.url}/api/feed/{self.user_id}", json=data)
+        response = self.session.post(f"{url2}/api/feed/{uid}", json=data)
         response2 = response.text
         if response.status_code != 201:
           print(response.text)
@@ -69,6 +73,7 @@ class KoGaMa:
           raise DisallowedURlInput("Please do not put links in your message!")
 
     def ReportUser(self, userID, reason):
+      url2 = self.url
       rl = reason.lower()
       rl2 = rl.replace(" ", "_")
       reports={"sharing_personal_information":1, "sharing_password": 2, "use_of_profanity": 3, "sexual_content_or_behaviour": 4, "violent_content": 5, "chain_messages": 6, "pretend_to_be_admin": 7, "personal_threats": 8, "cheats & hacking": 9, "other": 10, "using_cheat_tool": 11}
@@ -78,7 +83,7 @@ class KoGaMa:
         raise ReasonNotFound("This report reason is invalid!")
       else:
         rn = reports[rl2]
-        response = self.session.post(f"{self.url}/api/report/profile/{userID}/{rn}/")
+        response = self.session.post(f"{url2}/api/report/profile/{userID}/{rn}/")
         sc = response.status_code
         return True
         if sc == 429:
@@ -87,10 +92,9 @@ class KoGaMa:
           return False
       
     def PostGameComment(self, GameID, message):
-      data = {
-        "comment":message
-      }
-      response = self.session.post(f"{self.url}/game/{GameID}/comment/", json=data)
+      url2 = self.url
+      data = {"comment":message}
+      response = self.session.post(f"{url2}/game/{GameID}/comment/", json=data)
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
@@ -100,10 +104,9 @@ class KoGaMa:
         return False
     
     def PostModelComment(self, ModelID, message):
-      data = {
-        "comment":message
-      }
-      response = self.session.post(f"{self.url}/model/market/i-{ModelID}/comment/", json=data)
+      url2 = self.url
+      data = {"comment":message}
+      response = self.session.post(f"{url2}/model/market/i-{ModelID}/comment/", json=data)
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
@@ -113,7 +116,8 @@ class KoGaMa:
         return False
 
     def GetPostComments(self, postID):
-        response = self.session.get(f'{self.url}/api/feed/{postID}/comment/')
+        url2 = self.url
+        response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
         response2 = json.loads(response.text)
         gfc = response2["data"][0]["_data"]
         gfc2 = json.loads(gfc)
@@ -121,10 +125,9 @@ class KoGaMa:
         return gfc3
 
     def PostAvatarComment(self, AvatarID, message):
-      data = {
-        "comment":message
-      }
-      response = self.session.post(f"{self.url}/model/market/a-{AvatarID}/comment/")
+      url2 = self.url
+      data = {"comment":message}
+      response = self.session.post(f"{url2}/model/market/a-{AvatarID}/comment/")
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
@@ -134,6 +137,7 @@ class KoGaMa:
         return False
 
     def CreateGame(self, Name, Desc, Template):
+      url2 = self.url
       tmplt = Template.lower()
       tmplt2 = tmplt.replace(" ", "_")
       templates = {"base_template": 3, "city_template": 4, "island_template": 5, "parkour_template": 6}
@@ -141,12 +145,8 @@ class KoGaMa:
         raise TemplateNotFound("This template doesn't exist!")
       else:
         tn = templates[tmplt2]
-        data = {
-          "name":{Name},
-          "description":{Desc},
-          "proto_id":{tn}
-        }
-        response = self.session.post(f"{self.url}/game/", json=data)
+        data = {"name":Name,"description":Desc,"proto_id":tn}
+        response = self.session.post(f"{url2}/game/", json=data)
         stscd = response.status_code
         if stscd == 201:
           return True
@@ -154,12 +154,10 @@ class KoGaMa:
           return False
 
     def InviteMemberToGame(self, GameID, UserID):
-      data = {
-        "game_id":{self.GameID},
-        "member_user_id":{self.UserID}
+      url2 = self.url
+      data = {"game_id":GameID,"member_user_id":UserID
       }
-      response = self.session.post(f"{self.url}/game/{GameID}/member/", json=data)
-        
+      response = self.session.post(f"{url2}/game/{GameID}/member/", json=data)
       stscd = response.status_code
       if stscd == 201:
         return True
