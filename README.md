@@ -13,6 +13,8 @@ Features can also be disabled without previous warnings, in order to prevent use
 
 * I, TheNoobPro44, don't take any responsability in case your account get banned for Innapropiated or Bad use of this library, you've been warned.
 
+* Currently the only working versions are 0.3.9 and above.
+
 # Installation:
   In order to install this library, run the following command:
 ```
