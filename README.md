@@ -22,7 +22,7 @@ pip install kogama.py-rewrite
 
 ### Example:
 ```python
-from Kogama import KoGaMa
+from Kogama.kogama import KoGaMa
 
 client = KoGaMa("www")
 client.Login("Admin", 12345678)
@@ -31,4 +31,4 @@ client.Logout()
 ```
 -----
 ### Documentation
-The documentation is still a W.I.P (Work In Progress)
+ * https://thenoobpro44.gitbook.io/kogama-py-rewrite/
