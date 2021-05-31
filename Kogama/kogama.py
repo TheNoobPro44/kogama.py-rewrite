@@ -198,3 +198,35 @@ class KoGaMa:
         return True
       if stscd != 201:
         return False
+    
+    def SendFriendRequest(self, friendID):
+        """
+        Sends a friend request to a user.
+
+        Returns True, If a friend request has been sent.
+        Returns False, If fails to send a friend request.
+        """
+        url2 = self.url
+        uid = self.user_id
+        data = {"friend_profile_id":friendID,"profile_id":uid,"user_id":friendID}
+        response = self.session.post(f"{url2}/user/{friendID}/friend/", json=data)
+        stscd = response.status_code
+        if stscd == 201:
+            return True
+        elif stscd != 201:
+            return False
+    def CancelFriendRequest(self, friendID):
+      """
+      Cancels a friend request.
+
+      Returns True, If a friend request has been cancelled.
+      Returns False, If fails to cancel a friend request.
+      """
+      url2 = self.url
+      uid = self.user_id
+      response = self.session.delete(f"{url2}/user/{uid}/friend/{friendID}/")
+      stscd = reponse.status_code
+      if stscd == 201:
+         return True
+      elif stscd != 201:
+         return False
