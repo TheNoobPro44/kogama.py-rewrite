@@ -28,3 +28,7 @@ class ReasonNotFound(Exception):
 class TemplateNotFound(Exception):
   """This exception is raised when a user inputs a invalid template name."""
   pass
+
+class FieldIsRequired(Exception):
+  """This exception is raised when a required field is empty."""
+  pass
