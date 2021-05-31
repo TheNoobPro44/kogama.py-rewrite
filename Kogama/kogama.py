@@ -8,7 +8,7 @@ import requests
 import time
 import json
 from requests.sessions import Session, session
-from .Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound
+from .Exceptions import DisallowedURlInput, NotAValidServer, InvalidInformation, FailedLogin, FeedError, TooMuchRequests, ReasonNotFound, TemplateNotFound, FieldIsRequired
 
 class KoGaMa:
     def __init__(self, server):
@@ -30,6 +30,8 @@ class KoGaMa:
         Returns True, If the user has logged in.
         Returns False, If the user could not login.
         """
+        if username or password == None:
+            raise FieldIsRequired("Hey. This field is required, please input your username and password!")
         data = {"username": username, "password": password}
         response = self.session.post(f"{self.url}/auth/login/", json=data)
         if 'error' not in response:
@@ -59,6 +61,8 @@ class KoGaMa:
         Returns True, If the message has been sent.
         Returns False, If message fails to send.
         """
+        if message == None:
+            raise FieldIsRequired("Hey. This field is required, please input your message!")
         url2 = self.url
         uid = self.user_id
         data = {"status_message": message,"profile_id": uid,"wait": True}
@@ -76,6 +80,8 @@ class KoGaMa:
       Returns True, If the user has been reported.
       Returns False, If fails to report a user.
       """
+      if userID or reason == None:
+            raise FieldIsRequired("Hey. This field is required, please input the user ID or the reason!")
       url2 = self.url
       rl = reason.lower()
       rl2 = rl.replace(" ", "_")
@@ -101,6 +107,8 @@ class KoGaMa:
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
       """
+      if GameID or message == None:
+          raise FieldIsRequired("Hey. This field is required, please input your message or Game ID!")
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/game/{GameID}/comment/", json=data)
@@ -119,6 +127,8 @@ class KoGaMa:
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
       """
+      if message or ModelID == None:
+            raise FieldIsRequired("Hey. This field is required, please input your message or Model ID!")
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/model/market/i-{ModelID}/comment/", json=data)
@@ -149,6 +159,8 @@ class KoGaMa:
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
       """
+      if message or AvatarID == None:
+          raise FieldIsRequired("Hey. This field is required, please input your message or Avatar ID!")
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/model/market/a-{AvatarID}/comment/")
@@ -167,6 +179,12 @@ class KoGaMa:
       Returns True, If the game has been created.
       Returns False, If fails to create a game.
       """
+      if Name == None:
+          raise FieldIsRequired("Hey. This field is required, please input your game name!")
+      if Desc == None:
+          raise FieldIsRequired("Hey. This field is required, please input your game description!")
+      if Template == None:
+          raise FieldIsRequired("Hey. This field is required, please input your game template!")
       url2 = self.url
       tmplt = Template.lower()
       tmplt2 = tmplt.replace(" ", "_")
@@ -190,6 +208,8 @@ class KoGaMa:
       Returns True, If the user has been invited.
       Returns False, If fails to invite a user.
       """
+      if Desc == None:
+          raise FieldIsRequired("Hey. This field is required, please input your game id or user id!")
       url2 = self.url
       data = {"game_id":GameID,"member_user_id":UserID}
       response = self.session.post(f"{url2}/game/{GameID}/member/", json=data)
