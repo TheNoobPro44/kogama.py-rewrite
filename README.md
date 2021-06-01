@@ -42,5 +42,5 @@ client.Logout()
 ```
 -----
 ### Documentation
- * The official documentation of KoGaMa.py-Rewrite is:
+ * The official documentation of KoGaMa.py-Rewrite can be found at:
      https://thenoobpro44.gitbook.io/kogama-py-rewrite/
