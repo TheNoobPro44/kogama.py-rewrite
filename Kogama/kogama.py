@@ -1,7 +1,7 @@
 ''''
  * An API wrapper for KoGaMa re-written in Python. 
- * Scripted by: TheNoobPro44 (With the help of: MD & Tokeeto)
- * Originaly Made By: Ars3ne
+ * Scripted by: TheNoobPro44 (With the help of: MD & Tokeeto!)
+ * Originaly Made By: Ars3ne.
 '''
 import os
 import requests
@@ -62,14 +62,18 @@ class KoGaMa:
         Returns False, If message fails to send.
         """
         if message == None:
-            raise FieldIsRequired("Hey. This field is required, please input your message!")
+            raise FieldIsRequired("Hey. This field is required, please input your Message!")
         url2 = self.url
         uid = self.user_id
         data = {"status_message": message,"profile_id": uid,"wait": True}
         response = self.session.post(f"{url2}/api/feed/{uid}/", json=data)
         response2 = response.text
         if response.status_code != 200:
-          print(response.text)
+          return False
+        if response.status_code != 200
+          raise FeedError("An error ocurred while trying to post a message in your Feed!")
+        if response.status_code == 200:
+            return True
         if 'Disallowed' in response2:
           raise DisallowedURlInput("Please do not put links in your message!")
 
@@ -81,7 +85,7 @@ class KoGaMa:
       Returns False, If fails to report a user.
       """
       if userID or reason == None:
-            raise FieldIsRequired("Hey. This field is required, please input the user ID or the reason!")
+            raise FieldIsRequired("Hey. This field is required, please input the user ID or the Report Reason!")
       url2 = self.url
       rl = reason.lower()
       rl2 = rl.replace(" ", "_")
@@ -99,8 +103,24 @@ class KoGaMa:
           raise TooMuchRequests("Chill Cowboy! You're sending alot of reports!")
         if sc != 201:
           return False
-      
-    def PostGameComment(self, GameID, message):
+
+    # Comments Category..
+    
+    def GetPostComments(self, postID):
+        """
+        Get comments from a post and return it.
+        """
+        if postID == None:
+            raise FieldIsRequired("Hey. This field is required, please input your Post ID!")
+        url2 = self.url
+        response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
+        response2 = json.loads(response.text)
+        gfc = response2["data"][0]["_data"]
+        gfc2 = json.loads(gfc)
+        gfc3 = gfc2["data"]
+        return gfc3
+
+      def PostGameComment(self, GameID, message):
       """
       Post a comment in a Game.
 
@@ -108,7 +128,7 @@ class KoGaMa:
       Returns False, If fails to post a comment.
       """
       if GameID or message == None:
-          raise FieldIsRequired("Hey. This field is required, please input your message or Game ID!")
+          raise FieldIsRequired("Hey. This field is required, please input your Message or Game ID!")
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/game/{GameID}/comment/", json=data)
@@ -119,7 +139,7 @@ class KoGaMa:
         return True
       elif response.status_code != 201:
         return False
-    
+
     def PostModelComment(self, ModelID, message):
       """
       Post a comment in a Model.
@@ -128,7 +148,7 @@ class KoGaMa:
       Returns False, If fails to post a comment.
       """
       if message or ModelID == None:
-            raise FieldIsRequired("Hey. This field is required, please input your message or Model ID!")
+            raise FieldIsRequired("Hey. This field is required, please input your Message or Model ID!")
       url2 = self.url
       data = {"comment":message}
       response = self.session.post(f"{url2}/model/market/i-{ModelID}/comment/", json=data)
@@ -139,19 +159,7 @@ class KoGaMa:
         return True
       elif response.status_code != 201:
         return False
-
-    def GetPostComments(self, postID):
-        """
-        Get comments from a post and return it.
-        """
-        url2 = self.url
-        response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
-        response2 = json.loads(response.text)
-        gfc = response2["data"][0]["_data"]
-        gfc2 = json.loads(gfc)
-        gfc3 = gfc2["data"]
-        return gfc3
-
+    
     def PostAvatarComment(self, AvatarID, message):
       """
       Post a comment in a Avatar.
@@ -172,6 +180,27 @@ class KoGaMa:
       elif response.status_code != 201:
         return False
 
+    def PostNewsComment(self, newsID, message):
+        """
+        Post a comment in a News Page.
+        
+        Returns True, If the comment has been posted.
+        Returns False, If fails to post a comment.
+        """
+        if Name == None:
+            raise FieldIsRequired("Hey. This field is required, please input your message or News ID!")
+        url2 = self.url
+        data = {"comment":message}
+        response = self.session.post(f"{url2}/api/news/{newsID}/comment/", json=data}
+        response2 = response.text
+        if response.status_code == 429:
+            raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
+        if response.status_code == 201:
+            return True
+        elif response.status_code != 201:
+            return False
+    # Game Category..
+    
     def CreateGame(self, Name, Desc, Template):
       """
       Creates a game.
@@ -180,11 +209,11 @@ class KoGaMa:
       Returns False, If fails to create a game.
       """
       if Name == None:
-          raise FieldIsRequired("Hey. This field is required, please input your game name!")
+          raise FieldIsRequired("Hey. This field is required, please input your Game Name!")
       if Desc == None:
-          raise FieldIsRequired("Hey. This field is required, please input your game description!")
+          raise FieldIsRequired("Hey. This field is required, please input your Game Description!")
       if Template == None:
-          raise FieldIsRequired("Hey. This field is required, please input your game template!")
+          raise FieldIsRequired("Hey. This field is required, please input your Game Template!")
       url2 = self.url
       tmplt = Template.lower()
       tmplt2 = tmplt.replace(" ", "_")
@@ -208,8 +237,8 @@ class KoGaMa:
       Returns True, If the user has been invited.
       Returns False, If fails to invite a user.
       """
-      if Desc == None:
-          raise FieldIsRequired("Hey. This field is required, please input your game id or user id!")
+      if GameID or UserID == None:
+          raise FieldIsRequired("Hey. This field is required, please input your Game ID or User ID!")
       url2 = self.url
       data = {"game_id":GameID,"member_user_id":UserID}
       response = self.session.post(f"{url2}/game/{GameID}/member/", json=data)
@@ -219,6 +248,7 @@ class KoGaMa:
       if stscd != 201:
         return False
     
+    # Friend Category..
     def SendFriendRequest(self, friendID):
         """
         Sends a friend request to a user.
@@ -226,6 +256,8 @@ class KoGaMa:
         Returns True, If a friend request has been sent.
         Returns False, If fails to send a friend request.
         """
+        if friendID == None:
+            raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
         url2 = self.url
         uid = self.user_id
         data = {"friend_profile_id":friendID,"profile_id":uid,"user_id":friendID}
@@ -242,6 +274,8 @@ class KoGaMa:
       Returns True, If a friend request has been cancelled.
       Returns False, If fails to cancel a friend request.
       """
+      if message == None:
+            raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
       url2 = self.url
       uid = self.user_id
       response = self.session.delete(f"{url2}/user/{uid}/friend/{friendID}/")
@@ -250,3 +284,38 @@ class KoGaMa:
          return True
       elif stscd != 201:
          return False
+        
+    # Buy Category..
+                                 
+    def PurchaseModel(self, modelID):
+       """
+       Purchases a Model from Shop.
+       
+       Returns True, If model has been bought.
+       Returns False, If fails to buy model.
+       """       
+       if modelID == None:
+            raise FieldIsRequired("Hey. This field is required, please input the Model ID!")
+       url2 = self.url
+       response = self.session.post(f"{url2}/model/market/i-{modelID}/purchase/")
+       stscd = reponse.status_code
+       if stscd == 201:
+         return True
+       elif stscd != 201:
+         return False
+                                     
+    def PurchaseAvatar(self, avatarID):
+       """
+       Purchases a Avatar from Shop.
+       
+       Returns True, If avatar has been bought.
+       Returns False, If fails to buy avatar.
+       """
+       url2 = self.url
+       if avatarID == None:
+            raise FieldIsRequired("Hey. This field is required, please input the Avatar ID!")
+       response = self.session.post(f"{url2}/model/market/a-{avatarID}/purchase/")
+       if stscd == 201:
+         return True
+       elif stscd != 201:
+         return False                      
