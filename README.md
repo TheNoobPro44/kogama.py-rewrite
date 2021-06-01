@@ -15,13 +15,20 @@ Features can also be disabled without previous warnings, in order to prevent use
 
 * I, TheNoobPro44, don't take any responsability in case your account get banned for Innapropiated or Bad use of this library, you've been warned.
 
-* Currently the only working versions are 0.3.9 and above.
+* This package has been create with the help of: MD, Tokeeto & Junko.
+
+* The only working version are above 0.3.9
 
 # Installation:
   In order to install this library, run the following command:
 ```
 # Windows
-pip install kogama.py-rewrite
+pip install KoGaMa.py-Rewrite
+```
+
+```
+# Unix/macOS
+python3 -m pip install "KoGaMa.py-Rewrite"
 ```
 
 ### Example:
@@ -35,4 +42,5 @@ client.Logout()
 ```
 -----
 ### Documentation
- * https://thenoobpro44.gitbook.io/kogama-py-rewrite/
+ * The official documentation of KoGaMa.py-Rewrite is above:
+     https://thenoobpro44.gitbook.io/kogama-py-rewrite/
