@@ -56,6 +56,10 @@ class KoGaMa:
       Logout a user from his KoGaMa account.
 
       Returns True, If the user has logged out.
+      
+      **Parameters**
+      ----------
+      No Parameters..
       """
       self.session.get(f"{self.url}/auth/logout/")
       self.session.cookies.clear()
