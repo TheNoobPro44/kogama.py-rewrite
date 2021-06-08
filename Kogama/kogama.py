@@ -65,7 +65,7 @@ class KoGaMa:
       self.session.cookies.clear()
       return True
 
-    def PostFeed(self, message):
+    def PostFeed(self, userID, message):
         """
         Post a message in user's Feed.
 
@@ -74,14 +74,15 @@ class KoGaMa:
         
         **Parameters**
         ----------
+        userID : int
+            ID of the user.
         message : str
             Message that will be posted.
         """
-        if message == None:
+        if message or userID == None:
             raise FieldIsRequired("Hey. This field is required, please input your Message!")
         url2 = self.url
-        uid = self.user_id
-        data = {"status_message": message,"profile_id": uid,"wait": True}
+        data = {"status_message": message,"profile_id": userID,"wait": True}
         response = self.session.post(f"{url2}/api/feed/{uid}/", json=data)
         response2 = response.text
         if response.status_code != 200:
