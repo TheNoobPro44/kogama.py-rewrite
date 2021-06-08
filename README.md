@@ -46,9 +46,9 @@ client.Logout()
 -----
 
 ### Credits
-Tokeeto :: Helped me sending requests to the server & debbuging.
-MD :: Debbuging Code.
-Junko :: Debbuging Code.
+- Tokeeto :: Helped me sending requests to the server & debbuging.
+- MD :: Debbuging Code.
+- Junko :: Debbuging Code.
 
 ### Documentation
  * The official documentation of KoGaMa.py-Rewrite can be found at:
