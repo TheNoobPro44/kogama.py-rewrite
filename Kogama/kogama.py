@@ -29,6 +29,13 @@ class KoGaMa:
 
         Returns True, If the user has logged in.
         Returns False, If the user could not login.
+        
+        **Parameters**
+        ----------
+        username : str
+            User's account name.
+        password : str
+            User's account password.
         """
         if username or password == None:
             raise FieldIsRequired("Hey. This field is required, please input your username and password!")
@@ -60,6 +67,11 @@ class KoGaMa:
 
         Returns True, If the message has been sent.
         Returns False, If message fails to send.
+        
+        **Parameters**
+        ----------
+        message : str
+            Message that will be posted.
         """
         if message == None:
             raise FieldIsRequired("Hey. This field is required, please input your Message!")
@@ -83,6 +95,12 @@ class KoGaMa:
 
       Returns True, If the user has been reported.
       Returns False, If fails to report a user.
+      **Parameters**
+        ----------
+        userID : int
+            The ID of the user being reported.
+        reason : str
+            Reason of report.
       """
       if userID or reason == None:
             raise FieldIsRequired("Hey. This field is required, please input the user ID or the Report Reason!")
@@ -109,6 +127,11 @@ class KoGaMa:
     def GetPostComments(self, postID):
         """
         Get comments from a post and return it.
+        
+        **Parameters**
+        ----------
+        postID : int
+            ID of the Post.
         """
         if postID == None:
             raise FieldIsRequired("Hey. This field is required, please input your Post ID!")
@@ -126,6 +149,13 @@ class KoGaMa:
 
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
+      
+      **Parameters**
+        ----------
+        GameID : int
+            ID of the Game.
+        message : str
+            Message that will be posted.
       """
       if GameID or message == None:
           raise FieldIsRequired("Hey. This field is required, please input your Message or Game ID!")
@@ -146,6 +176,13 @@ class KoGaMa:
 
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
+      
+      **Parameters**
+        ----------
+        ModelID : int
+            ID of the Model.
+        message : str
+            Message that will be posted.
       """
       if message or ModelID == None:
             raise FieldIsRequired("Hey. This field is required, please input your Message or Model ID!")
@@ -186,6 +223,13 @@ class KoGaMa:
         
         Returns True, If the comment has been posted.
         Returns False, If fails to post a comment.
+        
+        **Parameters**
+        ----------
+        newsID : int
+            ID of the News.
+        message : str
+            Message that will be posted.
         """
         if Name == None:
             raise FieldIsRequired("Hey. This field is required, please input your message or News ID!")
@@ -207,6 +251,15 @@ class KoGaMa:
 
       Returns True, If the game has been created.
       Returns False, If fails to create a game.
+      
+      **Parameters**
+        ----------
+        Name : str
+            Name of your Game.
+        Desc : str
+            Description of your Game.
+        Template : str
+            Template of your Game.
       """
       if Name == None:
           raise FieldIsRequired("Hey. This field is required, please input your Game Name!")
@@ -236,6 +289,13 @@ class KoGaMa:
 
       Returns True, If the user has been invited.
       Returns False, If fails to invite a user.
+      
+      **Parameters**
+        ----------
+        GameID : int
+            ID of the Game.
+        UserID : int
+            ID of the User.
       """
       if GameID or UserID == None:
           raise FieldIsRequired("Hey. This field is required, please input your Game ID or User ID!")
@@ -255,6 +315,11 @@ class KoGaMa:
 
         Returns True, If a friend request has been sent.
         Returns False, If fails to send a friend request.
+        
+        **Parameters**
+        ----------
+        UserID : int
+            ID of the User.
         """
         if friendID == None:
             raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
@@ -273,6 +338,11 @@ class KoGaMa:
 
       Returns True, If a friend request has been cancelled.
       Returns False, If fails to cancel a friend request.
+      
+      **Parameters**
+        ----------
+        UserID : int
+            ID of the User.
       """
       if message == None:
             raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
@@ -293,6 +363,11 @@ class KoGaMa:
        
        Returns True, If model has been bought.
        Returns False, If fails to buy model.
+       
+       **Parameters**
+        ----------
+        modelID : int
+            ID of the Model.
        """       
        if modelID == None:
             raise FieldIsRequired("Hey. This field is required, please input the Model ID!")
@@ -310,6 +385,11 @@ class KoGaMa:
        
        Returns True, If avatar has been bought.
        Returns False, If fails to buy avatar.
+       
+       **Parameters**
+        ----------
+        avatarID : int
+            ID of the Avatar.
        """
        url2 = self.url
        if avatarID == None:
