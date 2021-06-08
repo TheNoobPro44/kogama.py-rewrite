@@ -1,6 +1,6 @@
 # KoGaMa.py-Rewrite
 
-[![Python Version](https://img.shields.io/badge/python-%E2%89%A53.8-yellow.svg)](https://www.python.org/downloads/)  [![Pypi](https://img.shields.io/pypi/v/KoGaMa.py-Rewrite)](https://pypi.org/project/KoGaMa.py-Rewrite/)][![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)][![Downloads](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)  
+[![Python Version](https://img.shields.io/badge/python-%E2%89%A53.8-yellow.svg)](https://www.python.org/downloads/)  [![Pypi](https://img.shields.io/pypi/v/KoGaMa.py-Rewrite)](https://pypi.org/project/KoGaMa.py-Rewrite/)[![Downloads](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)  
 
 KoGaMa.py-rewrite is an easy to use API-wrapper for KoGaMa.
 
