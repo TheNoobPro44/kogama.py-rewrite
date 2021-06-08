@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-%E2%89%A53.8-yellow.svg)](https://www.python.org/downloads/)  [![Pypi](https://img.shields.io/pypi/v/KoGaMa.py-Rewrite)](https://pypi.org/project/KoGaMa.py-Rewrite/)
 
-KoGaMa.py-rewrite is a API-wrapper for KoGaMa.
+KoGaMa.py-rewrite is an easy to use API-wrapper for KoGaMa.
 
 # About
 
@@ -15,9 +15,12 @@ Features can also be disabled without previous warnings, in order to prevent use
 
 * I, TheNoobPro44, don't take any responsability in case your account get banned for Innapropiated or Bad use of this library, you've been warned.
 
-* This package has been create with the help of: MD, Tokeeto & Junko.
+* The only working versions are above 0.3.9!
 
-* The only working version are above 0.3.9
+### Key Features
+- Easy to Use.
+- Alot of Features.
+- No Dependencies.
 
 # Installation:
   In order to install this library, run the following command:
@@ -41,6 +44,12 @@ client.PostFeed("Hello, I'm using KoGaMa.py-Rewrite")
 client.Logout()
 ```
 -----
+
+### Credits
+Tokeeto :: Helped me sending requests to the server & debbuging.
+MD :: Debbuging Code.
+Junko :: Debbuging Code.
+
 ### Documentation
  * The official documentation of KoGaMa.py-Rewrite can be found at:
      https://thenoobpro44.gitbook.io/kogama-py-rewrite/
