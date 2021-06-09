@@ -39,8 +39,8 @@ python3 -m pip install "KoGaMa.py-Rewrite"
 from Kogama.kogama import KoGaMa
 
 client = KoGaMa("www")
-client.Login("Admin", 12345678)
-client.PostFeed("Hello, I'm using KoGaMa.py-Rewrite")
+client.Login("Admin", "MySecretPassword")
+client.PostFeed(12345678, "Hello, I'm using KoGaMa.py-Rewrite")
 client.Logout()
 ```
 -----
