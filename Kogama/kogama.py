@@ -37,7 +37,7 @@ class KoGaMa:
         password : str
             User's account password.
         """
-        if username or password == None:
+        if username or password == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your username and password!")
         data = {"username": username, "password": password}
         response = self.session.post(f"{self.url}/auth/login/", json=data)
@@ -79,7 +79,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
         """
-        if message or userID == None:
+        if message or userID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your Message!")
         url2 = self.url
         data = {"status_message": message,"profile_id": userID,"wait": True}
@@ -107,25 +107,24 @@ class KoGaMa:
         reason : str
             Reason of report.
       """
-      if userID or reason == None:
+      if userID or reason == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input the user ID or the Report Reason!")
+      reports={"sharing_personal_information":1, "sharing_password": 2, "use_of_profanity": 3, "sexual_content_or_behaviour": 4, "violent_content": 5, "chain_messages": 6, "pretend_to_be_admin": 7, "personal_threats": 8, "cheats & hacking": 9, "other": 10, "using_cheat_tool": 11}
       url2 = self.url
       rl = reason.lower()
       rl2 = rl.replace(" ", "_")
-      reports={"sharing_personal_information":1, "sharing_password": 2, "use_of_profanity": 3, "sexual_content_or_behaviour": 4, "violent_content": 5, "chain_messages": 6, "pretend_to_be_admin": 7, "personal_threats": 8, "cheats & hacking": 9, "other": 10, "using_cheat_tool": 11}
-      if not rl2 in reports:
-        return False
-      if not rl2 in reports:
+      try:
+        rl3 = reports[rl2]
+      except KeyError:
         raise ReasonNotFound("This report reason is invalid!")
-      else:
-        rn = reports[rl2]
-        response = self.session.post(f"{url2}/api/report/profile/{userID}/{rn}/")
-        sc = response.status_code
+      rn = reports[rl2]
+      response = self.session.post(f"{url2}/api/report/profile/{userID}/{rn}/")
+      sc = response.status_code
         return True
-        if sc == 429:
-          raise TooMuchRequests("Chill Cowboy! You're sending alot of reports!")
-        if sc != 201:
-          return False
+      if sc == 429:
+        raise TooMuchRequests("Chill Cowboy! You're sending alot of reports!")
+      if sc != 201:
+        return False
 
     # Comments Category..
     
@@ -138,7 +137,7 @@ class KoGaMa:
         postID : int
             ID of the Post.
         """
-        if postID == None:
+        if postID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your Post ID!")
         url2 = self.url
         response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
@@ -162,7 +161,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
       """
-      if GameID or message == None:
+      if GameID or message == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your Message or Game ID!")
       url2 = self.url
       data = {"comment":message}
@@ -189,7 +188,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
       """
-      if message or ModelID == None:
+      if message or ModelID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your Message or Model ID!")
       url2 = self.url
       data = {"comment":message}
@@ -209,7 +208,7 @@ class KoGaMa:
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
       """
-      if message or AvatarID == None:
+      if message or AvatarID == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your message or Avatar ID!")
       url2 = self.url
       data = {"comment":message}
@@ -236,7 +235,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
         """
-        if Name == None:
+        if newsID or message == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your message or News ID!")
         url2 = self.url
         data = {"comment":message}
@@ -266,27 +265,28 @@ class KoGaMa:
         Template : str
             Template of your Game.
       """
-      if Name == None:
+      if Name == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Name!")
-      if Desc == None:
+      if Desc == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Description!")
-      if Template == None:
+      if Template == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Template!")
       url2 = self.url
       tmplt = Template.lower()
       tmplt2 = tmplt.replace(" ", "_")
       templates = {"base_template": 3, "city_template": 4, "island_template": 5, "parkour_template": 6}
-      if not tmplt2 in templates:
+      try:
+        tpl = templates[tmplt2]
+      except KeyError:
         raise TemplateNotFound("This template doesn't exist!")
-      else:
-        tn = templates[tmplt2]
-        data = {"name":Name,"description":Desc,"proto_id":tn}
-        response = self.session.post(f"{url2}/game/", json=data)
-        stscd = response.status_code
-        if stscd == 201:
-          return True
-        if stscd != 201:
-          return False
+      tn = templates[tmplt2]
+      data = {"name":Name,"description":Desc,"proto_id":tn}
+      response = self.session.post(f"{url2}/game/", json=data)
+      stscd = response.status_code
+      if stscd == 201:
+        return True
+      if stscd != 201:
+        return False
 
     def InviteMemberToGame(self, GameID, UserID):
       """
@@ -302,7 +302,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
       """
-      if GameID or UserID == None:
+      if GameID or UserID == None or " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game ID or User ID!")
       url2 = self.url
       data = {"game_id":GameID,"member_user_id":UserID}
@@ -326,7 +326,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
         """
-        if friendID == None:
+        if friendID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
         url2 = self.url
         uid = self.user_id
@@ -349,7 +349,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
       """
-      if message == None:
+      if friendID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
       url2 = self.url
       uid = self.user_id
@@ -374,7 +374,7 @@ class KoGaMa:
         modelID : int
             ID of the Model.
        """       
-       if modelID == None:
+       if modelID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input the Model ID!")
        url2 = self.url
        response = self.session.post(f"{url2}/model/market/i-{modelID}/purchase/")
@@ -397,10 +397,88 @@ class KoGaMa:
             ID of the Avatar.
        """
        url2 = self.url
-       if avatarID == None:
+       if avatarID == None or " ":
             raise FieldIsRequired("Hey. This field is required, please input the Avatar ID!")
        response = self.session.post(f"{url2}/model/market/a-{avatarID}/purchase/")
        if stscd == 201:
          return True
        elif stscd != 201:
-         return False                      
+         return False    
+    
+    # Elite Category
+                                     
+    def ClaimEliteGold(self):
+       """
+       Claims daily Elite Gold.
+       
+       Returns True, If the gold has been collected.
+       Returns False, If fails to collect gold.
+       
+       **Parameters**
+        ----------
+        None
+       """
+       url2 = self.url
+       uid = self.user_id
+       response = self.session.post(f"{url2}/user/{uid}/claim-daily-gold/")
+       if stscd == 200:
+        return True
+       elif stscd != 200:
+        return False
+    # Badges Category
+    
+    def ReedemCoupon(self, coupon)
+       """
+       Reedems a coupon code.
+       
+       Returns True, If the coupon has been reedemed.
+       Returns False, If fails to reedem coupon.
+       
+       **Parameters**
+        ----------
+        coupon : str
+            Coupon Code.
+       """
+       if coupon == None or " ":
+            raise FieldIsRequired("Hey. This field is required, please input the Coupon Code!")
+       data = {"code": coupon}
+       url2 = self.url
+       response = self.session.post(f"{url2}/api/coupon/redeem/", json=data)
+       if stscd == 201:
+         return True
+       elif stscd != 201:
+         return False                          
+
+    def UnlockBadge(self, badge):
+       """
+       Unlocks a Hidden Badge.
+       
+       Returns True, If the badge has been unlocked.
+       Returns False, If fails to unlock badge.
+       
+       **Parameters**
+        ----------
+        badge : str
+            Badge Name.
+        
+        **Notes**
+        ----------
+        This feature is still in development and will likely be finished in future versions..
+       """
+       if badge == None or " ":
+           raise FieldIsRequired("Hey. This field is required, please input the Badge Name!")
+       bdg = badge.lower()
+       bdg2 = bdg.replace(" ", "_")
+       url2 = self.url
+       uid = self.user_id
+       badges = {"follow_instagram_kogama_official": 110, "follow_instagram": 110, "ifollowinstagram": 110}
+       try:
+          bdg3 = badges[bdg2]
+       except KeyError:
+           raise Exception("Badge Not Found!")
+       bdg3 = badges[bdg2]
+       response = self.session.post(f"{url2}/user/{uid}/badge/{bdg3}/read/")
+       if stscd == 201:
+        return True
+       elif stscd != 201:
+        return False    
