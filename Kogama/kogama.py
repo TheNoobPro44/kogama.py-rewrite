@@ -37,7 +37,7 @@ class KoGaMa:
         password : str
             User's account password.
         """
-        if username or password == None or " ":
+        if username or password == " ":
             raise FieldIsRequired("Hey. This field is required, please input your username and password!")
         data = {"username": username, "password": password}
         response = self.session.post(f"{self.url}/auth/login/", json=data)
@@ -79,7 +79,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
         """
-        if message or userID == None or " ":
+        if message or userID == " ":
             raise FieldIsRequired("Hey. This field is required, please input your Message!")
         url2 = self.url
         uid = userID
@@ -108,7 +108,7 @@ class KoGaMa:
         reason : str
             Reason of report.
       """
-      if userID or reason == None or " ":
+      if userID or reason == " ":
         raise FieldIsRequired("Hey. This field is required, please input the user ID or the Report Reason!")
       reports={"sharing_personal_information":1, "sharing_password": 2, "use_of_profanity": 3, "sexual_content_or_behaviour": 4, "violent_content": 5, "chain_messages": 6, "pretend_to_be_admin": 7, "personal_threats": 8, "cheats & hacking": 9, "other": 10, "using_cheat_tool": 11}
       url2 = self.url
@@ -137,7 +137,7 @@ class KoGaMa:
         postID : int
             ID of the Post.
         """
-        if postID == None or " ":
+        if postID == " ":
             raise FieldIsRequired("Hey. This field is required, please input your Post ID!")
         url2 = self.url
         response = self.session.get(f'{url2}/api/feed/{postID}/comment/')
@@ -161,7 +161,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
       """
-      if GameID or message == None or " ":
+      if GameID or message == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Message or Game ID!")
       url2 = self.url
       data = {"comment":message}
@@ -188,7 +188,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
       """
-      if message or ModelID == None or " ":
+      if message or ModelID == " ":
             raise FieldIsRequired("Hey. This field is required, please input your Message or Model ID!")
       url2 = self.url
       data = {"comment":message}
@@ -208,7 +208,7 @@ class KoGaMa:
       Returns True, If the comment has been posted.
       Returns False, If fails to post a comment.
       """
-      if message or AvatarID == None or " ":
+      if message or AvatarID == " ":
           raise FieldIsRequired("Hey. This field is required, please input your message or Avatar ID!")
       url2 = self.url
       data = {"comment":message}
@@ -235,7 +235,7 @@ class KoGaMa:
         message : str
             Message that will be posted.
         """
-        if newsID or message == None or " ":
+        if newsID or message == " ":
             raise FieldIsRequired("Hey. This field is required, please input your message or News ID!")
         url2 = self.url
         data = {"comment":message}
@@ -265,11 +265,11 @@ class KoGaMa:
         Template : str
             Template of your Game.
       """
-      if Name == None or " ":
+      if Name == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Name!")
-      if Desc == None or " ":
+      if Desc == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Description!")
-      if Template == None or " ":
+      if Template == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game Template!")
       url2 = self.url
       tmplt = Template.lower()
@@ -302,7 +302,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
       """
-      if GameID or UserID == None or " ":
+      if GameID or UserID == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Game ID or User ID!")
       url2 = self.url
       data = {"game_id":GameID,"member_user_id":UserID}
@@ -326,7 +326,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
         """
-        if friendID == None or " ":
+        if friendID == " ":
             raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
         url2 = self.url
         uid = self.user_id
@@ -349,7 +349,7 @@ class KoGaMa:
         UserID : int
             ID of the User.
       """
-      if friendID == None or " ":
+      if friendID == " ":
         raise FieldIsRequired("Hey. This field is required, please input your friend's Profile ID!")
       url2 = self.url
       uid = self.user_id
@@ -374,7 +374,7 @@ class KoGaMa:
         modelID : int
             ID of the Model.
        """       
-       if modelID == None or " ":
+       if modelID == " ":
             raise FieldIsRequired("Hey. This field is required, please input the Model ID!")
        url2 = self.url
        response = self.session.post(f"{url2}/model/market/i-{modelID}/purchase/")
@@ -397,7 +397,7 @@ class KoGaMa:
             ID of the Avatar.
        """
        url2 = self.url
-       if avatarID == None or " ":
+       if avatarID == " ":
             raise FieldIsRequired("Hey. This field is required, please input the Avatar ID!")
        response = self.session.post(f"{url2}/model/market/a-{avatarID}/purchase/")
        stscd = response.status_code
@@ -440,7 +440,7 @@ class KoGaMa:
       coupon : str
           Coupon Code.
       """
-      if coupon == None or " ":
+      if coupon == " ":
         raise FieldIsRequired("Hey. This field is required, please input the Coupon Code!")
       data = {"code": coupon}
       url2 = self.url
@@ -467,7 +467,7 @@ class KoGaMa:
         ----------
         This feature is still in development and will likely be finished in future versions..
        """
-       if badge == None or " ":
+       if badge == " ":
            raise FieldIsRequired("Hey. This field is required, please input the Badge Name!")
        bdg = badge.lower()
        bdg2 = bdg.replace(" ", "_")
@@ -500,7 +500,7 @@ class KoGaMa:
       email : str
           Account Email.
       """
-      if email == None or " ":
+      if email == " ":
           raise FieldIsRequired("Hey. This field is required, please input your Email!")
       data = {"email": email}
       url2 = self.url
