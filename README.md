@@ -40,7 +40,7 @@ from Kogama.kogama import KoGaMa
 
 client = KoGaMa("www")
 client.Login("Admin", "MySecretPassword")
-client.PostFeed(12345678, "Hello, I'm using KoGaMa.py-Rewrite")
+client.PostFeed("12345678", "Hello, I'm using KoGaMa.py-Rewrite")
 client.Logout()
 ```
 -----
