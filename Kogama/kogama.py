@@ -201,8 +201,8 @@ class KoGaMa:
 
       """
       url2 = self.url
-      data = {"comment":message}
-      response = self.session.post(f"{url2}/model/market/a-{AvatarID}/comment/")
+      data = {"comment": message}
+      response = self.session.post(f"{url2}/model/market/a-{AvatarID}/comment/", json=data)
       response2 = response.text
       if response.status_code == 429:
         raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
