@@ -24,9 +24,9 @@ class KoGaMa:
 
     def Login(self, username, password):
         """
-        - Makes login in a KoGaMa account, given the Username & Password.
+        - Makes login in a KoGaMa account, given the Username & Password.\n
 
-        Returns True, If the user has logged in.
+        Returns True, If the user has logged in.\n
         Returns False, If the user could not login.
 
         Parameters:
@@ -49,7 +49,7 @@ class KoGaMa:
 
     def Logout(self):
       """
-      - Logout a user from his KoGaMa account.
+      - Logout a user from his KoGaMa account.\n
 
       Returns True, If the user has logged out.
       
