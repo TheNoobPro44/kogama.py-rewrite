@@ -471,5 +471,5 @@ class KoGaMa:
        userID = self.user_id
        url2 = self.url
        while True:
-         self.session.post(f"{url2}/chat/{userID}/")
+         self.session.get(f"{url2}/chat/{userID}/")
          time.sleep(18)
