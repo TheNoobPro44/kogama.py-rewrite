@@ -6,6 +6,7 @@
 import requests
 import json
 import requests
+import time
 from .Exceptions import DisallowedURlInput, NotAValidServer, FailedLogin, TooMuchRequests, ReasonNotFound, TemplateNotFound
 
 class KoGaMa:
@@ -403,9 +404,9 @@ class KoGaMa:
     
     def ReedemCoupon(self, coupon):
       """
-      Reedems a coupon code.
+      Reedems a coupon code.\n
        
-      Returns True, If the coupon has been reedemed.
+      Returns True, If the coupon has been reedemed.\n
       Returns False, If fails to reedem coupon.
        
       Parameters:
@@ -424,9 +425,9 @@ class KoGaMa:
 
     def UnlockBadge(self, badge):
        """
-       Unlocks a Hidden Badge.
+       Unlocks a Hidden Badge.\n
        
-       Returns True, If the badge has been unlocked.
+       Returns True, If the badge has been unlocked.\n
        Returns False, If fails to unlock badge.
        
        Parameters:
@@ -454,3 +455,21 @@ class KoGaMa:
         return True
        elif stscd != 201:
         return False
+    
+    def run(self):
+       """
+        - Keeps the player alive.\n 
+       
+       Parameters:
+       ----------
+        None..
+        
+       Notes:
+       ----------
+        This feature is still in development, and might not work..
+       """
+       userID = self.user_id
+       url2 = self.url
+       while True:
+         self.session.post(f"{url2}/chat/{userID}/")
+         time.sleep(18)
