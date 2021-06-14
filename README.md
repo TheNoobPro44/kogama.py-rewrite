@@ -20,7 +20,7 @@ Features can also be disabled without previous warnings, in order to prevent use
 ### Key Features
 - Easy to Use.
 - Alot of Features.
-- No Dependencies.
+- 1 Dependency (Requests)
 
 # Installation:
   In order to install this library, run the following command:
