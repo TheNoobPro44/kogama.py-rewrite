@@ -5,7 +5,6 @@
 '''
 import requests
 import json
-import requests
 import time
 from .Exceptions import DisallowedURlInput, NotAValidServer, FailedLogin, TooMuchRequests, ReasonNotFound, TemplateNotFound
 
@@ -27,7 +26,7 @@ class KoGaMa:
         - Makes login in a KoGaMa account, given the Username & Password.\n
 
         Returns True, If the user has logged in.\n
-        Returns False, If the user could not login.
+        Returns False, If the user could not login.\n
 
         Parameters:
         ----------
@@ -43,7 +42,7 @@ class KoGaMa:
         elif 'error' in response:
           return False
         if response.status_code != 200:
-          raise FailedLogin("Please check If your Password / Username is correct and try again..")
+          raise FailedLogin(f"Please check If your Password / Username is correct and try again.. (Error Code: {response.status_code})")
         else:
           self.user_id = response.json()['data']['id']
 
@@ -51,7 +50,7 @@ class KoGaMa:
       """
       - Logout a user from his KoGaMa account.\n
 
-      Returns True, If the user has logged out.
+      Returns True, If the user has logged out.\n
       
       Parameters:
       ----------
@@ -66,7 +65,7 @@ class KoGaMa:
         - Post a message in user's Feed.\n
 
         Returns True, If the message has been sent.\n
-        Returns False, If message fails to send.
+        Returns False, If message fails to send.\n
         
         Parameters:
         ----------
@@ -82,6 +81,8 @@ class KoGaMa:
         response2 = response.text
         if response.status_code != 200:
           return False
+        if response.status_code != 200:
+            raise Exception(f"Failed to Post a message in [User ID: {userID}] feed, make sure he's your friend. (Error Code: {response.status_code})")
         if response.status_code == 200:
           return True
         if 'Disallowed' in response2:
@@ -92,7 +93,7 @@ class KoGaMa:
       - Reports a users..\n
 
       Returns True, If the user has been reported.\n
-      Returns False, If fails to report a user.
+      Returns False, If fails to report a user.\n
 
       Parameters:
       ----------
@@ -113,15 +114,17 @@ class KoGaMa:
       response = self.session.post(f"{url2}/api/report/profile/{userID}/{rn}/")
       sc = response.status_code
       if sc == 429:
-        raise TooMuchRequests("Chill Cowboy! You're sending alot of reports!")
+        raise TooMuchRequests(f"Chill Cowboy! You're sending alot of reports! (Error Code: {response.status_code})")
       if sc != 201:
         return False
+      if sc != 201:
+        raise Exception(f"Failed to report [User ID: {userID}] for [{reason}].. (Error Code: {response.status_code})")
 
     # Comments Category..
     
     def GetPostComments(self, postID):
         """
-        - Get comments from a post and return it.
+        - Get comments from a post and return it.\n
         
         Parameters:
         ----------
@@ -141,7 +144,7 @@ class KoGaMa:
       - Post a comment in a Game.\n
 
       Returns True, If the comment has been posted.\n
-      Returns False, If fails to post a comment.
+      Returns False, If fails to post a comment.\n
       
       Parameters:
       ----------
@@ -160,13 +163,15 @@ class KoGaMa:
         return True
       elif response.status_code != 201:
         return False
+      if response.status_code != 201:
+        raise Exception(f"Failed to post comment in [Game ID: {GameID}].. (Error Code: {response.status_code})")
 
     def PostModelComment(self, ModelID, message):
       """
       - Post a comment in a Model.\n
 
       Returns True, If the comment has been posted.\n
-      Returns False, If fails to post a comment.
+      Returns False, If fails to post a comment.\n
       
       Parameters:
       ----------
@@ -185,13 +190,15 @@ class KoGaMa:
         return True
       elif response.status_code != 201:
         return False
+      if response.status_code != 201:
+        raise Exception(f"Failed to post comment in [Model ID: {ModelID}].. (Error Code: {response.status_code})")
     
     def PostAvatarComment(self, AvatarID, message):
       """
       - Post a comment in a Avatar.\n
 
       Returns True, If the comment has been posted.\n
-      Returns False, If fails to post a comment.
+      Returns False, If fails to post a comment.\n
 
       Parameters:
       ----------
@@ -211,13 +218,15 @@ class KoGaMa:
         return True
       elif response.status_code != 201:
         return False
+      if response.status_code != 201:
+        raise Exception(f"Failed to post comment in [Avatar ID: {AvatarID}].. (Error Code: {response.status_code})")
 
     def PostNewsComment(self, newsID, message):
         """
         - Post a comment in a News Page.\n
         
         Returns True, If the comment has been posted.\n
-        Returns False, If fails to post a comment.
+        Returns False, If fails to post a comment.\n
         
         Parameters:
         ----------
@@ -236,6 +245,8 @@ class KoGaMa:
             return True
         elif response.status_code != 201:
             return False
+        if response.status_code != 201:
+            raise Exception(f"Failed to post comment in [News ID: {newsID}].. (Error Code: {response.status_code})")
     # Game Category..
     
     def CreateGame(self, Name, Desc, Template):
@@ -243,7 +254,7 @@ class KoGaMa:
       - Creates a game.\n
 
       Returns True, If the game has been created.\n
-      Returns False, If fails to create a game.
+      Returns False, If fails to create a game.\n
       
       Parameters:
       ----------
@@ -270,13 +281,15 @@ class KoGaMa:
         return True
       if stscd != 201:
         return False
+      if response.status_code != 201:
+            raise Exception(f"Failed to create game, [Game Name: {Name}]; [Game Description: {Desc}]; [Template: {Template}].. (Error Code: {response.status_code})")
 
     def InviteMemberToGame(self, GameID, UserID):
       """
       - Invites a member to a Project or Game.\n
 
       Returns True, If the user has been invited.\n
-      Returns False, If fails to invite a user.
+      Returns False, If fails to invite a user.\n
       
       Parameters:
       ----------
@@ -293,6 +306,8 @@ class KoGaMa:
         return True
       if stscd != 201:
         return False
+      if response.status_code != 201:
+            raise Exception(f"Failed to invite [User ID: {UserID}] to a game, [Game ID: {GameID}].. (Error Code: {response.status_code})")
     
     # Friend Category..
     def SendFriendRequest(self, friendID):
@@ -300,7 +315,7 @@ class KoGaMa:
         - Sends a friend request to a user.\n
 
         Returns True, If a friend request has been sent.\n
-        Returns False, If fails to send a friend request.
+        Returns False, If fails to send a friend request.\n
         
         Parameters:
         ----------
@@ -316,12 +331,15 @@ class KoGaMa:
             return True
         elif stscd != 201:
             return False
+        if response.status_code != 201:
+            raise Exception(f"Failed to send friend request to [Friend ID: {friendID}].. (Error Code: {response.status_code})")
+            
     def CancelFriendRequest(self, friendID):
       """
       - Cancels a friend request.\n
 
       Returns True, If a friend request has been cancelled.\n
-      Returns False, If fails to cancel a friend request.
+      Returns False, If fails to cancel a friend request.\n
       
       Parameters:
       ----------
@@ -336,6 +354,8 @@ class KoGaMa:
          return True
       elif stscd != 201:
          return False
+      if response.status_code != 201:
+            raise Exception(f"Failed to cancel friend request, [Friend ID: {friendID}].. (Error Code: {response.status_code})")
         
     # Buy Category..
                                  
@@ -344,7 +364,7 @@ class KoGaMa:
        - Purchases a Model from Shop.\n
        
        Returns True, If model has been bought.\n
-       Returns False, If fails to buy model.
+       Returns False, If fails to buy model.\n
        
        Parameters:
        ----------
@@ -358,13 +378,15 @@ class KoGaMa:
          return True
        elif stscd != 201:
          return False
+       if response.status_code != 201:
+            raise Exception(f"Failed to purchase model, [Model ID: {modelID}].. (Error Code: {response.status_code})")
                                      
     def PurchaseAvatar(self, avatarID):
        """
        - Purchases a Avatar from Shop.\n
        
        Returns True, If avatar has been bought.\n
-       Returns False, If fails to buy avatar.
+       Returns False, If fails to buy avatar.\n
        
        Parameters:
        ----------
@@ -377,7 +399,9 @@ class KoGaMa:
        if stscd == 201:
          return True
        elif stscd != 201:
-         return False    
+         return False
+       if response.status_code != 201:
+            raise Exception(f"Failed to purchase avatar, [Avatar ID: {avatarID}].. (Error Code: {response.status_code})")
     
     # Elite Category
                                      
@@ -386,7 +410,7 @@ class KoGaMa:
         - Claims daily Elite Gold.\n 
        
        Returns True, If the gold has been collected.\n
-       Returns False, If fails to collect gold.
+       Returns False, If fails to collect gold.\n
        
        Parameters:
        ----------
@@ -400,6 +424,8 @@ class KoGaMa:
         return True
        elif stscd != 200:
         return False
+       if response.status_code != 200:
+            raise Exception(f"Failed to purchase claim elite gold.. (Error Code: {response.status_code})")
     # Badges Category
     
     def ReedemCoupon(self, coupon):
@@ -407,7 +433,7 @@ class KoGaMa:
       Reedems a coupon code.\n
        
       Returns True, If the coupon has been reedemed.\n
-      Returns False, If fails to reedem coupon.
+      Returns False, If fails to reedem coupon.\n
        
       Parameters:
       ----------
@@ -421,14 +447,16 @@ class KoGaMa:
       if stscd == 201:
         return True
       elif stscd != 201:
-         return False                          
+         return False
+      if response.status_code != 201:
+            raise Exception(f"Failed to reedem coupon, [Coupon: {coupon}].. (Error Code: {response.status_code})")
 
     def UnlockBadge(self, badge):
        """
        Unlocks a Hidden Badge.\n
        
        Returns True, If the badge has been unlocked.\n
-       Returns False, If fails to unlock badge.
+       Returns False, If fails to unlock badge.\n
        
        Parameters:
        ----------
@@ -455,6 +483,8 @@ class KoGaMa:
         return True
        elif stscd != 201:
         return False
+       if response.status_code != 201:
+            raise Exception(f"Failed to unlock badge, [Badge ID: {badge}].. (Error Code: {response.status_code})")
     
     def run(self):
        """
@@ -466,10 +496,12 @@ class KoGaMa:
         
        Notes:
        ----------
-        This feature is still in development, and might not work..
+        This feature is still in development, and might not work..\n
        """
        userID = self.user_id
        url2 = self.url
+       j = f"/profile/{userID}/"
+       data = {"status":"active","location": j}
        while True:
-         self.session.get(f"{url2}/chat/{userID}/")
-         time.sleep(18)
+         self.session.post(f"{url2}/user/{userID}/pulse/")
+         time.sleep(22)
