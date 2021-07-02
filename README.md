@@ -15,7 +15,7 @@ Features can also be disabled without previous warnings, in order to prevent use
 
 * I, TheNoobPro44, don't take any responsability in case your account get banned for Innapropiated or Bad use of this library, you've been warned.
 
-* Note: The only working versions are above 0.4.8!
+* Note: The only working versions are above 0.5!
 
 ### Key Features
 - Easy to Use.
