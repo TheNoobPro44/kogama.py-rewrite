@@ -1,7 +1,7 @@
 ''''
- * An API wrapper for KoGaMa re-written in Python. 
- * Scripted by: TheNoobPro44 (With the help of: MD & Tokeeto!)
- * Originaly Made By: Ars3ne.
+ * An API wrapper for KoGaMa re-written in Python.\n
+ * Scripted by: TheNoobPro44 (With the help of: MD & Tokeeto!)\n
+ * Originaly Made By: Ars3ne.\n
 '''
 import requests
 import json
@@ -37,9 +37,9 @@ class KoGaMa:
         """
         data = {"username": username, "password": password}
         response = self.session.post(f"{self.url}/auth/login/", json=data)
-        if 'error' not in response:
+        if 'error' or 'banned' not in response:
           return True
-        elif 'error' in response:
+        elif 'error' or 'banned' in response:
           return False
         if response.status_code != 200:
           raise FailedLogin(f"Please check If your Password / Username is correct and try again.. (Error Code: {response.status_code})")
@@ -90,35 +90,13 @@ class KoGaMa:
 
     def ReportUser(self, userID, reason):
       """
-      - Reports a users..\n
+      - Feature has been removed.
 
-      Returns True, If the user has been reported.\n
-      Returns False, If fails to report a user.\n
-
-      Parameters:
+      Notes:
       ----------
-        userID : int / str
-            The ID of the user being reported.
-        reason : str
-            Reason of report.
+        Due to developers planning to remove this feature, we'll deactivate it..
       """
-      reports={"sharing_personal_information":1, "sharing_password": 2, "use_of_profanity": 3, "sexual_content_or_behaviour": 4, "violent_content": 5, "chain_messages": 6, "pretend_to_be_admin": 7, "personal_threats": 8, "cheats & hacking": 9, "other": 10, "using_cheat_tool": 11}
-      url2 = self.url
-      rl = reason.lower()
-      rl2 = rl.replace(" ", "_")
-      try:
-        rl3 = reports[rl2]
-      except KeyError:
-        raise ReasonNotFound("This report reason is invalid!")
-      rn = reports[rl2]
-      response = self.session.post(f"{url2}/api/report/profile/{userID}/{rn}/")
-      sc = response.status_code
-      if sc == 429:
-        raise TooMuchRequests(f"Chill Cowboy! You're sending alot of reports! (Error Code: {response.status_code})")
-      if sc != 201:
-        return False
-      if sc != 201:
-        raise Exception(f"Failed to report [User ID: {userID}] for [{reason}].. (Error Code: {response.status_code})")
+      raise Exception("Hey! Due to developers planning removing the report button in the future, we'll deactivate this function.. We hope you understand!")
 
     # Comments Category..
     
@@ -460,24 +438,16 @@ class KoGaMa:
        
        Parameters:
        ----------
-        badge : str
-            Badge Name.
+        badge : str / int
+            Badge Number.
         
        Notes:
        ----------
         This feature is still in development and will likely be finished in future versions..
        """
-       bdg = badge.lower()
-       bdg2 = bdg.replace(" ", "_")
        url2 = self.url
        uid = self.user_id
-       badges = {"follow_instagram_kogama_official": 110, "follow_instagram": 110, "ifollowinstagram": 110}
-       try:
-          bdg3 = badges[bdg2]
-       except KeyError:
-           raise Exception("Badge Not Found!")
-       bdg3 = badges[bdg2]
-       response = self.session.post(f"{url2}/user/{uid}/badge/{bdg3}/read/")
+       response = self.session.post(f"{url2}/user/{uid}/badge/{badge}/read/")
        stscd = response.status_code
        if stscd == 201:
         return True
@@ -492,7 +462,7 @@ class KoGaMa:
        
        Parameters:
        ----------
-        None..
+        None..\n
         
        Notes:
        ----------
@@ -504,4 +474,4 @@ class KoGaMa:
        data = {"status":"active","location": j}
        while True:
          self.session.post(f"{url2}/user/{userID}/pulse/")
-         time.sleep(22)
+         time.sleep(21)
