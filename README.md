@@ -53,3 +53,5 @@ client.run() # Keeps the account alive.
 
 ## Documentation:
  * [Official Documentation.](https://thenoobpro44.gitbook.io/kogama-py-rewrite/)
+
+*PS: If you have any trouble using the Package contact me on Discord: **TheNoobPro44#2525**.*
