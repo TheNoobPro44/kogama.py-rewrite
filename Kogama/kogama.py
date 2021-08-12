@@ -116,6 +116,32 @@ class KoGaMa:
         gfc2 = json.loads(gfc)
         gfc3 = gfc2["data"]
         return gfc3
+    
+    def PostFeedComment(self, message, FeedID):
+        """
+        - Post a comment in a Feed.\n
+
+        Returns True, If the comment has been posted.\n
+        Returns False, If fails to post a comment.\n
+      
+        Parameters:
+        ----------
+            FeedID : int / str
+                ID of the Feed.
+            message : str
+                Message that will be posted.
+        """
+        url2 = self.url
+        data = {"comment":message}
+        response = self.session.post(f"{url2}/api/feed/{FeedID}/comment/", json=data)
+        if response.status_code == 429:
+            raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
+        if response.status_code == 201:
+            return True
+        elif response.status_code != 201:
+            return False
+        if response.status_code != 201:
+            raise Exception(f"Failed to post comment in [Feed ID: {FeedID}].. (Error Code: {response.status_code})")
 
     def PostGameComment(self, GameID, message):
       """
@@ -224,7 +250,60 @@ class KoGaMa:
         elif response.status_code != 201:
             return False
         if response.status_code != 201:
-            raise Exception(f"Failed to post comment in [News ID: {newsID}].. (Error Code: {response.status_code})")
+            raise Exception(f"Failed to post comment in [News ID: {newsID}].. (Error Code: {response.status_code})") 
+            
+    def DeleteGameComment(self, GameID, CommentID):
+        """
+        - Deletes a comment in a Game.\n
+        
+        Returns True, If the comment has been deleted.\n
+        Returns False, If fails to delete the comment.\n
+        
+        Parameters:
+        ----------
+        GameID : int / str
+            ID of the Game.
+        CommentID : int / str
+            ID of the Comment.
+        """
+        url2 = self.url
+        response = self.session.delete(f"{url2}/game/{GameID}/comment/{CommentID}/")
+        response2 = response.text
+        if response.status_code == 200:
+            return True
+        elif response.status_code != 200:
+            return False
+        if response.status_code != 200:
+            raise Exception(f"Failed to delete comment in [Comment ID: {CommentID}].. (Error Code: {response.status_code})")
+        elif "Unauthorized" in response2:
+            raise Exception("Unauthorized.")
+    
+    def DeleteFeedComment(self, FeedID, CommentID):
+        """
+        - Deletes a comment in a Game.\n
+        
+        Returns True, If the comment has been deleted.\n
+        Returns False, If fails to delete the comment.\n
+        
+        Parameters:
+        ----------
+        FeedID : int / str
+            ID of the Feed.
+        CommentID : int / str
+            ID of the Comment.
+        """
+        url2 = self.url
+        response = self.session.delete(f"{url2}/feed/{FeedID}/comment/{FeedID}/")
+        response2 = response.text
+        if response.status_code == 200:
+            return True
+        elif response.status_code != 200:
+            return False
+        if response.status_code != 200:
+            raise Exception(f"Failed to delete comment in [Comment ID: {CommentID}].. (Error Code: {response.status_code})")
+        elif "Unauthorized" in response2:
+            raise Exception("Unauthorized.")
+            
     # Game Category..
     
     def CreateGame(self, Name, Desc, Template):
