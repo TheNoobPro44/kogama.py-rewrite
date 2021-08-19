@@ -31,9 +31,9 @@ python3 -m pip install "KoGaMa.py-Rewrite"
 ```
 ----------------------------------------------------------------------------------------------
 ## Key Features:
-- Easy to Use.
-- Alot of Features.
-- 1 Dependency (Requests.)
+- Easy to Use & Learn.
+- Many Features!
+- No Dependencies!
 
 ## Example:
 ```python
@@ -47,7 +47,7 @@ client.run() # Keeps the account alive.
 -----
 
 ## Credits:
-- Tokeeto :: Helped me sending requests to the server & debbuging.
+- Tokeeto :: Helping me with Requests & Debbuging Code.
 - MD :: Debbuging Code.
 - Junko :: Debbuging Code.
 
