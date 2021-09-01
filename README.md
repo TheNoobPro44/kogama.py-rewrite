@@ -33,15 +33,14 @@ python3 -m pip install "KoGaMa.py-Rewrite"
 ## Key Features:
 - Easy to Use & Learn.
 - Many Features!
-- No Dependencies!
 
 ## Example:
 ```python
 from Kogama.kogama import KoGaMa
 
-client = KoGaMa("www") # Change "www" to your server.
-client.Login("Admin", "MySecretPassword") # Makes login in our account..
-client.PostFeed("12345678", "Hello, I'm using KoGaMa.py-Rewrite") # Posts a message in our Feed.
+client = KoGaMa("www") # create a new client for the "www" server.
+client.Login("Admin", "MySecretPassword") # log in on your account..
+client.PostFeed("12345678", "Hello, I'm using KoGaMa.py-Rewrite") # Posts a message in your feed.
 client.run() # Keeps the account alive.
 ```
 -----
