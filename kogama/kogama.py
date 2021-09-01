@@ -426,7 +426,7 @@ class KoGaMa:
                 )
             time.sleep(5)
     
-    def PlayerStatus(self, status):
+    def player_status(self, status):
         """
         Shows the players as online or offline in the chat.\n
         
