@@ -11,11 +11,9 @@
 
 * With this package, you can create your own projects, like Anti-Spams Bots or even Auto-Moderator Bot!
 
-* If you use this Package to create project which violates KoGaMa's [Terms of Use](https://www.kogama.com/help/terms-and-conditions/), your account will most likely get banned. Some features can also be disabled without previous warnings, in order to prevent user abuse.
+* If you use this Package to create project which violates KoGaMa's [Terms of Use](https://www.kogama.com/help/terms-and-conditions/), your account will most likely get banned. (In case you've been banned for Innapropiated or Bad Use of this package, we have no responsability.)
 
-* In case you've been banned for Innapropiated or Bad Use of this package, we have no responsability. (You've been warned!)
-
-* Note: Versions bellow 0.5 might not work properly.. We recommend you always installing newer versions.
+* Note: Versions bellow `0.5` might not work properly.. We recommend you always installing newer versions.
 ----------------------------------------------------------------------------------------------
 # Installation:
   * In order to install this library, run the following command:
@@ -38,19 +36,19 @@ python3 -m pip install "KoGaMa.py-Rewrite"
 ```python
 from Kogama.kogama import KoGaMa
 
-client = KoGaMa("www") # create a new client for the "www" server.
-client.Login("Admin", "MySecretPassword") # log in on your account..
-client.PostFeed("12345678", "Hello, I'm using KoGaMa.py-Rewrite") # Posts a message in your feed.
-client.run() # Keeps the account alive.
+client = KoGaMa("www") # creates a new client for the "www" server.
+client.login("CoolKoGaMian", "MySecretPassword") # log in on your account.
+client.post_feed("12345678", "Hello, I'm using KoGaMa.py-Rewrite") # posts a message in your feed.
+client.PlayerStatus("Online") # shows the account as online.
 ```
 -----
 
 ## Credits:
-- Tokeeto :: Helping me with Requests & Debbuging Code.
+- Tokeeto :: Helping me with some requests & fixing code.
 - MD :: Debbuging Code.
 - Junko :: Debbuging Code.
 
 ## Documentation:
  * [Official Documentation.](https://thenoobpro44.gitbook.io/kogama-py-rewrite/)
 
-*PS: If you have any trouble using the Package contact me on Discord: **TheNoobPro44#2525**.*
+*P.S: If you have any trouble using the Package, feel free to contact me on Discord: **TheNoobPro44#2525**.*
