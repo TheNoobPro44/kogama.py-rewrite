@@ -24,7 +24,7 @@ class DisallowedURlInput(Exception):
 
 
 class TooManyRequests(Exception):
-    """This exception is raised when a user sends too much requests."""
+    """This exception is raised when a user sends too many requests."""
     pass
 
 
