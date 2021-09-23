@@ -35,9 +35,9 @@ class KoGaMa:
         self.show_as_available = False
         ping_thread = threading.Thread(
             target=self._send_ping,
-            name='ping',
-            deamon=True
+            name='ping'
         )
+        ping_thread.daemon=True
         ping_thread.run()
 
     def login(self, username, password):
