@@ -17,8 +17,7 @@ from .exceptions import (
 )
 
 class KoGaMa:
-    """ A wrapper for the KoGaMa Website API."""
-    
+    """ An api-wrapper for the KoGaMa Website API."""
     def __init__(self, server):
         if server.lower() not in ('www', 'br', 'friends'):
             raise NotAValidServer('Not a valid server!')
@@ -35,9 +34,9 @@ class KoGaMa:
         self.show_as_available = False
         ping_thread = threading.Thread(
             target=self._send_ping,
-            name='ping'
+            name='ping',
+            daemon=True
         )
-        ping_thread.daemon=True
         ping_thread.run()
 
     def login(self, username, password):
@@ -48,9 +47,9 @@ class KoGaMa:
         Parameters:
         ----------
             username : str\n
-            >    Users account name.\n
+                Users account name.\n
             password : str\n
-            >    Users account password.\n
+                Users account password.\n
         """
         response = self.session.post(
             f"{self.url}/auth/login/",
@@ -93,9 +92,9 @@ class KoGaMa:
         Parameters:
         -----------
             user_id : str\n
-            >    User's account ID.\n
+                User's account ID.\n
             message : str\n
-            >    Message that will be sent.\n
+                Message that will be sent.\n
         """
         self._post_to_feed(
             f"{self.url}/api/feed/{user_id}/",
@@ -109,7 +108,7 @@ class KoGaMa:
         Parameters:
         ----------
             post_id : str\n
-            >    ID of the Post.\n
+                ID of the Post.\n
         """
         response = self.session.get(f'{self.url}/api/feed/{post_id}/comment/')
         return response.json()
@@ -121,9 +120,9 @@ class KoGaMa:
         Parameters:
         ----------
             feed_id : str\n
-            >    ID of the Feed.\n
+                ID of the Feed.\n
             message : str\n
-            >    Message that will be posted.\n
+                Message that will be posted.\n
         """
         self._post_to_feed(
             f"{self.url}/api/feed/{feed_id}/comment/",
@@ -137,9 +136,9 @@ class KoGaMa:
         Parameters:
         ----------
             game_id : str\n
-            >    ID of the Game.\n
+                ID of the Game.\n
             message : str\n
-            >    Message that will be posted.\n
+                Message that will be posted.\n
         """
         self._post_to_feed(
             f"{self.url}/game/{game_id}/comment/",
@@ -153,9 +152,9 @@ class KoGaMa:
         Parameters:
         ----------
             model_id : str\n
-            >    ID of the Model.\n
+                ID of the Model.\n
             message : str\n
-            >    Message that will be posted.\n
+                Message that will be posted.\n
         """
         self._post_to_feed(f"{self.url}/model/market/i-{model_id}/comment/", {"comment":message})
 
@@ -166,9 +165,9 @@ class KoGaMa:
         Parameters:
         ----------
             avatar_id : str\n
-            >    ID of the Avatar.\n
+                ID of the Avatar.\n
             message : str\n
-            >    Message that will be posted.\n
+                Message that will be posted.\n
         """
         self._post_to_feed(f"{self.url}/model/market/a-{avatar_id}/comment/", {"comment":message})
 
@@ -182,9 +181,9 @@ class KoGaMa:
         Parameters:
         ----------
             news_id : int / str\n
-            >    ID of the News.\n
+                ID of the News.\n
             message : str\n
-            >    Message that will be posted.\n
+                Message that will be posted.\n
         """
         self._post_to_feed(f"{self.url}/api/news/{news_id}/comment/", {"comment":message})
 
@@ -204,9 +203,9 @@ class KoGaMa:
         Parameters:
         ----------
             game_id : str\n
-            >    ID of the Game.\n
+                ID of the Game.\n
             comment_id : str\n
-            >    ID of the Comment.\n
+                ID of the Comment.\n
         """
         self._delete_comment(f"{self.url}/game/{game_id}/comment/{comment_id}/")
 
@@ -217,9 +216,9 @@ class KoGaMa:
         Parameters:
         ----------
             feed_id : int / str
-            >    ID of the Feed.
+                ID of the Feed.
             comment_id : int / str
-            >    ID of the Comment.
+                ID of the Comment.
         """
         self._delete_comment(f"{self.url}/feed/{feed_id}/comment/{feed_id}/")
 
@@ -230,12 +229,12 @@ class KoGaMa:
         Parameters:
         ----------
             name : str\n
-            >    name of your Game.\n
+                name of your Game.\n
             description : str\n
-            >    Description of your Game.\n
+                Description of your Game.\n
             template : str\n
-            >    Template of your Game.\n
-            >    Valid values are: ['base', 'city', 'island', 'parkour']\n
+                Template of your Game.\n
+                Valid values are: ['base', 'city', 'island', 'parkour']\n
         """
         templates = {"base": 3, "city": 4, "island": 5, "parkour": 6}
         if template not in templates:
@@ -260,9 +259,9 @@ class KoGaMa:
         Parameters:
         ----------
             game_id : str\n
-            >    ID of the Game.\n
+                ID of the Game.\n
             user_id : str\n
-            >    ID of the User.\n
+                ID of the User.\n
         """
         response = self.session.post(
             f"{self.url}/game/{game_id}/member/",
@@ -278,7 +277,7 @@ class KoGaMa:
         Parameters:
         ----------
             user_id : str\n
-            >    ID of the User.\n
+                ID of the User.\n
         """
         response = self.session.post(
             f"{self.url}/user/{friend_id}/friend/",
@@ -299,7 +298,7 @@ class KoGaMa:
         Parameters:
         ----------
             user_id : str\n
-            >    ID of the User.\n
+                ID of the User.\n
         """
         response = self.session.delete(f"{self.url}/user/{self.user_id}/friend/{friend_id}/")
 
@@ -313,7 +312,7 @@ class KoGaMa:
         Parameters:
         ----------
             model_id : str\n
-            >    ID of the Model.\n
+                ID of the Model.\n
         """
         response = self.session.post(f"{self.url}/model/market/i-{model_id}/purchase/")
 
@@ -327,7 +326,7 @@ class KoGaMa:
         Parameters:
         ----------
             avatar_id : str\n
-            >    ID of the Avatar.\n
+                ID of the Avatar.\n
         """
         response = self.session.post(f"{self.url}/model/market/a-{avatar_id}/purchase/")
 
@@ -349,7 +348,7 @@ class KoGaMa:
         Parameters:
         ----------
             coupon : str\n
-            >    Coupon Code.\n
+                Coupon Code.\n
         """
         response = self.session.post(
             f"{self.url}/api/coupon/redeem/",
@@ -366,7 +365,7 @@ class KoGaMa:
         Parameters:
         -----------
             badge : str\n
-            >    Badge ID.\n
+                Badge ID.\n
         """
         response = self.session.post(f"{self.url}/user/{self.user_id}/badge/{badge}/read/")
 
@@ -380,7 +379,7 @@ class KoGaMa:
         Parameters:
         ----------
             game_id : str\n
-            >    ID of the game.\n
+                ID of the game.\n
         """
         response = self.session.post(f"{self.url}/game/{game_id}/like/")
 
@@ -394,7 +393,7 @@ class KoGaMa:
         Parameters:
         ----------
             model_id : str\n
-            >    ID of the model.\n
+                ID of the model.\n
         """
         response = self.session.post(f"{self.url}/model/market/i-{model_id}/like/")
 
@@ -408,7 +407,7 @@ class KoGaMa:
         Parameters:
         ----------
             avatar_id : str\n
-            >    ID of the model.\n
+                ID of the model.\n
         """
         response = self.session.post(f"{self.url}/model/market/a-{avatar_id}/like/")
         if response.status_code != 201:
@@ -433,7 +432,7 @@ class KoGaMa:
         Parameters:
         ----------
             status : str\n
-            >    Status of the Player.. (Online/Offline)\n
+                Status of the Player.. (Online/Offline)\n
         """
         if status not in ("Online", "Offline"):
             raise Exception("Please, input either Online or Offline.")
@@ -441,4 +440,3 @@ class KoGaMa:
             self.show_as_available = True
         elif status == "Offline":
             self.show_as_available = False
-            
