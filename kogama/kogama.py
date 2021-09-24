@@ -12,7 +12,6 @@ from .exceptions import (
     NotAValidServer,
     FailedLogin,
     TooManyRequests,
-    ReasonNotFound,
     TemplateNotFound
 )
 
@@ -20,7 +19,7 @@ class KoGaMa:
     """ An api-wrapper for the KoGaMa Website API."""
     def __init__(self, server):
         if server.lower() not in ('www', 'br', 'friends'):
-            raise NotAValidServer('Not a valid server!')
+            raise NotAValidServer("This isn't a valid server! Please input only: www, br or friends.")
 
         self.url = {
             'br': 'https://kogama.com.br',
@@ -59,8 +58,6 @@ class KoGaMa:
             }
         )
 
-        if 'error' in response:
-            raise FailedLogin('An error happened!')
         if 'banned' in response:
             raise FailedLogin('Your account was banned.')
         if response.status_code != 200:
@@ -76,10 +73,10 @@ class KoGaMa:
         self.session.cookies.clear()
 
     def _post_to_feed(self, feed_url, data):
-        response = self.session.post(url, json=data)
+        response = self.session.post(feed_url, json=data)
 
         if response.status_code == 429:
-            raise TooMuchRequests("Chill, Cowboy! You are doing this too much, wait a little.")
+            raise TooManyRequests("Chill, Cowboy! You are doing this too much, wait a little.")
         if response.status_code not in (201, 200):
             raise Exception(f"Failed to post comment. Error Code: {response.status_code}")
         if 'Disallowed' in response.text:
@@ -187,14 +184,14 @@ class KoGaMa:
         """
         self._post_to_feed(f"{self.url}/api/news/{news_id}/comment/", {"comment":message})
 
-    def _delete_comment(self, url):
+    def _delete_comment(self, url, comment_id):
         response = self.session.delete(url)
 
         if response.status_code != 200:
             raise Exception(f"Failed to delete comment in [Comment ID: {comment_id}].. (Error Code: {response.status_code})")
 
         if "Unauthorized" in response.text:
-            raise Exception("Unauthorized.")
+            raise Exception("Unauthorized. (Error Code: {response.status_code})")
 
     def delete_game_comment(self, game_id, comment_id):
         """
@@ -207,7 +204,7 @@ class KoGaMa:
             comment_id : str\n
                 ID of the Comment.\n
         """
-        self._delete_comment(f"{self.url}/game/{game_id}/comment/{comment_id}/")
+        self._delete_comment(f"{self.url}/game/{game_id}/comment/{comment_id}/", comment_id)
 
     def delete_feed_comment(self, feed_id, comment_id):
         """
@@ -215,12 +212,12 @@ class KoGaMa:
 
         Parameters:
         ----------
-            feed_id : int / str
-                ID of the Feed.
-            comment_id : int / str
-                ID of the Comment.
+            feed_id : str\n
+                ID of the Feed.\n
+            comment_id : str\n
+                ID of the Comment.\n
         """
-        self._delete_comment(f"{self.url}/feed/{feed_id}/comment/{feed_id}/")
+        self._delete_comment(f"{self.url}/feed/{feed_id}/comment/{feed_id}/", comment_id)
 
     def create_game(self, name, description, template='base'):
         """
@@ -238,19 +235,19 @@ class KoGaMa:
         """
         templates = {"base": 3, "city": 4, "island": 5, "parkour": 6}
         if template not in templates:
-            raise TemplateNotFound("This template doesn't exist!")
+            raise TemplateNotFound("This template doesn't exist! Valid templates are: base, city, island or parkour.")
 
         response = self.session.post(
             f"{self.url}/game/",
             json={
-                "name": Name,
+                "name": name,
                 "description": description,
                 "proto_id": templates[template]
             }
         )
 
         if response.status_code != 201:
-            raise Exception(f"Failed to create game, [Game Name: {Name}]; [Game Description: {Desc}]; [Template: {Template}]; (Error Code: {response.status_code})")
+            raise Exception(f"Failed to create game, [Game Name: {name}]; [Template: {template}]; (Error Code: {response.status_code})")
 
     def invite_member_to_game(self, game_id, user_id):
         """
@@ -413,6 +410,31 @@ class KoGaMa:
         if response.status_code != 201:
             raise Exception(f"Failed to Like avatar, [Avatar ID: {avatar_id}].. (Error Code: {response.status_code})")
 
+    def add_email(self, email):
+        """
+        Adds an email to your account.\n
+
+        Parameters:
+        ----------
+            email : str\n
+                Your email.\n
+        """
+        response = self.session.put(
+            f"{self.url}/user/{self.user_id}/email/",
+            json={"email": email}
+            )
+        if response.status_code != 201:
+            raise Exception(f"Failed to add an email to [User ID: {self.user_id}]; [Email: {email}] (Error Code: {response.status_code})")
+
+    def confirm_email(self):
+        """
+        Confirms your email.\n
+        """
+        response = self.session.put(
+            f"{self.url}/user/{self.user_id}/email-confirm/"
+            )
+        if response.status_code != 201:
+            raise Exception(f"Failed to confirm email. (Error Code: {response.status_code})")
     def _send_ping(self):
         """ Notifies the server that the user is available in chat."""
         while True:
@@ -427,7 +449,7 @@ class KoGaMa:
     
     def player_status(self, status):
         """
-        Shows the players as online or offline in the chat.\n
+        Shows the players as Online or Offline in the chat.\n
         
         Parameters:
         ----------
