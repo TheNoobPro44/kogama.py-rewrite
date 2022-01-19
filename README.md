@@ -48,6 +48,6 @@ Credits
 
 Link
 ------
-- Official Documentation <https://thenoobpro44.gitbook.io/kogama-py-rewrite/>
+- Official Documentation: <https://thenoobpro44.gitbook.io/kogama-py-rewrite/>
 
 * Need any help regarding the package? Contact me on Discord: **TheNoobPro44#5561** *
