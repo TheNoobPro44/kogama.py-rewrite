@@ -8,7 +8,6 @@ import requests
 from exceptions import (failed_login, disallowed_url_input, too_many_requests, unauthorized_request)
 
 class KoGaMa:
-    """KoGaMa.py-Rewrite is an api-wrapper for the KoGaMa Website API."""
     def __init__(self, server : str):
         if server.lower() not in ('www', 'br', 'friends'):
             raise Exception(f'"{server.upper()}" is not a valid server! Valid values are ["www","br", "friends"]')
@@ -58,6 +57,7 @@ class KoGaMa:
 
         self.session.get(f"{self.url}/auth/logout/")
         self.session.cookies.clear()
+        self.user_id = None
     
     def _handle_requests(self, method, url, data=None, error_message='Failed to perform action..'):
         """This funcion will handle all requests (DELETE, POST, PUT) and will also handle errors properly.."""
