@@ -35,7 +35,7 @@ Quick Example
 --------------
 
 ```python
-from Kogama import KoGaMa
+from Kogama.kogama import KoGaMa
 
 client = KoGaMa("www")
 client.login("CoolKoGaMian", "MySecretPassword")
