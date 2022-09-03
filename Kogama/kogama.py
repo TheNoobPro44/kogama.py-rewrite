@@ -32,27 +32,27 @@ class KoGaMa:
             password (str) : Account Password.
         """
 
-        response = self.session.post(f"{self.url}/auth/login/",json={"username": username,"password": password})
+        response = self.session.post(f"{self.url}/auth/login/", json={"username": username,"password": password})
 
         if response.status_code == 429:
            raise too_many_requests("Chill, Cowboy! You are doing this too much, wait a little. [Status Code: 429]")
 
         if 'banned' in response:
-            raise Exception('Unable to make login: Your account was banned.')
-        elif 'error' in response:
-            raise failed_login(f'An error happened! [Status Code: {response.status_code}]')
+            raise failed_login('Unable to make login: Your account was banned.')
+        elif response.status_code == 400:
+            raise failed_login(f'Wrong username or password! [Status Code: {response.status_code}]')
         elif response.status_code != 200:
-            raise failed_login(f"Please check If your Username or Password is correct and try again.. [Status Code: {response.status_code}]")
+            raise failed_login(f"Something went wrong. [Status Code: {response.status_code}]")
 
         self.user_id = response.json()['data']['id']
 
     def logout(self):
         """
         Logout of a KoGama Account.\n
-        Deletes the cookies of account, ending the session.
+        Deletes the cookies of the account, ending the session.
 
-        Note: This isn't always required. It's optional if you wanna clear your cookies.
-
+        Note: This isn't always required. It's optional if you wanna clear your cookies and keep the account safe.
+        After executing this, you need to log in again to use the commands.
         """
 
         self.session.get(f"{self.url}/auth/logout/")
@@ -60,7 +60,7 @@ class KoGaMa:
         self.user_id = None
     
     def _handle_requests(self, method, url, data=None, error_message='Failed to perform action..'):
-        """This funcion will handle all requests (DELETE, POST, PUT) and will also handle errors properly.."""
+        """This function will handle all requests (DELETE, POST, PUT) and will also handle errors properly.."""
 
         if method == 'delete':
             response = self.session.delete(url)
@@ -79,7 +79,7 @@ class KoGaMa:
             if response.status_code == 429:
                 raise too_many_requests("Chill, Cowboy! You are doing this too much, wait a little. [Status Code: 429]")
             elif 'banned' in response.text:
-                raise Exception("You can't peform this action since your account was banned..")
+                raise Exception("You can't perform this action since your account was banned..")
             elif "Unauthorized" in response.text:
                 raise unauthorized_request("Unauthorized Request. You don't have permission to perform that action. [Status Code: 401]")
             elif 'Disallowed' in response.text:
@@ -100,7 +100,7 @@ class KoGaMa:
 
     def post_feed(self, user_id : str, message : str):
         """
-        Posts a message in users Feed.\n
+        Posts a message in a users Feed.\n
 
         Parameters:
         ------------
@@ -196,7 +196,7 @@ class KoGaMa:
     
     def delete_avatar_comment(self, avatar_id : str, comment_id : str):
         """
-        Deletes a Avatar comment.\n
+        Deletes an Avatar comment.\n
 
         Parameters:
         ------------
@@ -232,7 +232,7 @@ class KoGaMa:
 
     def create_game(self, name : str, description='No description provided.', template='base'):
         """
-        Creates a game.\n
+        Creates an game.\n
 
         By default, the template is 'base' and description is 'No description provided'.\n
 
@@ -317,7 +317,7 @@ class KoGaMa:
         """
         Claims daily Elite Gold.
 
-        Returns `Exception` If failed to claim the Gold.
+        Returns an `Exception` If failed to claim the Gold.
         """
 
         response = self.session.post(f"{self.url}/user/{self.user_id}/claim-daily-gold/")
