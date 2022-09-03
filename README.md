@@ -2,14 +2,14 @@
 
 [![Python Version](https://img.shields.io/badge/python-%E2%89%A53.8-yellow.svg)](https://www.python.org/downloads/)  [![Pypi](https://img.shields.io/pypi/v/KoGaMa.py-Rewrite)](https://pypi.org/project/KoGaMa.py-Rewrite/)  ![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)  [![Downloads](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)](https://static.pepy.tech/badge/KoGaMa.py-Rewrite)  
 
-**KoGaMa.py-Rewrite is an api-wrapper for the KoGaMa Website API. You can create any projects you want with this package.**
+**KoGaMa.py-Rewrite is an API-Wrapper for the KoGaMa Website API. You can create any projects you want with this package.**
 
 About
 ------
 
-* Original repo made by: Ars3ne --> [KoGaMa.py](https://github.com/Ars3ne/kogama.py).
+* Original repo made by: Ars3ne --> [KoGaMa.py](https://github.com/Ars3ne/kogama.py)
 
-* There's no responsability If your account has been banned due to [KoGaMa's Terms of Use](https://www.kogama.com/help/terms-and-conditions/) violations while using this package.
+* Remember to follow [KoGaMa's Terms of Use](https://www.kogama.com/help/terms-and-conditions/) while using this package.
 
 
 Installation
@@ -50,4 +50,4 @@ Link
 ------
 - Official Documentation: <https://thenoobpro44.gitbook.io/kogama-py-rewrite/>
 
-* Need any help regarding the package? Contact me on Discord: **TheNoobPro44#5561** *
+* Need any help regarding the package? Contact me on Discord: **TheNoobPro44#5561**
