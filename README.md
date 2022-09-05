@@ -39,7 +39,7 @@ from Kogama.kogama import KoGaMa
 
 client = KoGaMa("www")
 client.login("CoolKoGaMian", "MySecretPassword")
-client.post_feed("12345678", "hello")
+client.post_feed_message("12345678", "hello")
 ```
 
 Credits
